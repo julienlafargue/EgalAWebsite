@@ -1,58 +1,68 @@
 /* ==============================================
    EGAL A — Script principal
-   Système de saisons, animations, interactivité
+   Saisons · Particules · Jeu grenouille
    ============================================== */
-
 'use strict';
 
-/* ── Données saisonnières ── */
+/* ──────────────────────────────────────────────
+   DONNÉES SAISONNIÈRES
+   ────────────────────────────────────────────── */
 const SEASONS = {
   spring: {
-    emoji: '🌸',
-    name: 'Printemps',
-    quote: 'Les bonnes affaires fleurissent !',
-    collectionTitle: 'Collection Printemps',
-    collectionText: 'Nouvelles arrivées printanières disponibles en boutique !',
+    emoji:'🌸', name:'Printemps',
+    quote:'Les bonnes affaires fleurissent !',
+    collectionTitle:'Collection Printemps',
+    collectionText:'Nouvelles arrivées printanières disponibles dès maintenant !',
+    ribbonItems:['🌸','Collection Printemps — Les bonnes affaires fleurissent !','🌸','Egal A — La Baule','🐸','Des grandes marques, des petits prix','🌸'],
+    particles:{ emoji:'🌸', count:18, spin:true,  drift:40,  minDur:6,  maxDur:12 },
+    speeches:['Ribbit !','Coucou !','Bonne affaire !','🌸 Magnifique !','C\'est le printemps !'],
   },
   summer: {
-    emoji: '☀️',
-    name: 'Été',
-    quote: 'Soleil de La Baule, prix au frais !',
-    collectionTitle: 'Collection Été',
-    collectionText: 'Profitez de nos arrivées estivales à prix déstockage !',
+    emoji:'☀️', name:'Été',
+    quote:'Soleil de La Baule, prix au frais !',
+    collectionTitle:'Collection Été',
+    collectionText:'Profitez de nos arrivées estivales à prix déstockage !',
+    ribbonItems:['☀️','Collection Été — Soleil de La Baule, prix au frais !','☀️','Egal A — La Baule','🐸','Des grandes marques, des petits prix','☀️'],
+    particles:{ emoji:'⭐', count:14, spin:false, drift:20,  minDur:4,  maxDur:9  },
+    speeches:['Splash !','Ribbit soleil !','Beach vibes 🏖️','On est bien ici !','Cowabunga !'],
   },
   autumn: {
-    emoji: '🍂',
-    name: 'Automne',
-    quote: 'Les feuilles tombent, les prix aussi !',
-    collectionTitle: 'Collection Automne',
-    collectionText: 'Les nouvelles collections automne arrivent chaque semaine !',
+    emoji:'🍂', name:'Automne',
+    quote:'Les feuilles tombent, les prix aussi !',
+    collectionTitle:'Collection Automne',
+    collectionText:'Nouvelles collections automne disponibles chaque semaine !',
+    ribbonItems:['🍂','Collection Automne — Les feuilles tombent, les prix aussi !','🍂','Egal A — La Baule','🐸','Des grandes marques, des petits prix','🍁'],
+    particles:{ emoji:'🍂', count:22, spin:true,  drift:60,  minDur:5,  maxDur:11 },
+    speeches:['Ribbit !','Cosy & stylé !','🍂 Magnifique !','Promo feuillue !','On aime l\'automne !'],
   },
   winter: {
-    emoji: '❄️',
-    name: 'Hiver',
-    quote: 'Le froid des températures, pas des prix !',
-    collectionTitle: 'Collection Hiver',
-    collectionText: 'Manteaux, pulls et accessoires de grandes marques à prix déstockage !',
+    emoji:'❄️', name:'Hiver',
+    quote:'Le froid des températures, pas des prix !',
+    collectionTitle:'Collection Hiver',
+    collectionText:'Manteaux, pulls et accessoires à prix déstockage !',
+    ribbonItems:['❄️','Collection Hiver — Le froid des températures, pas des prix !','❄️','Egal A — La Baule','🐸','Des grandes marques, des petits prix','⛄'],
+    particles:{ emoji:'❄️', count:28, spin:false, drift:25,  minDur:5,  maxDur:13 },
+    speeches:['Brrr... ribbit !','Chaud dedans !','❄️ Féerique !','On est au chaud ici !','Froid dehors, prix froids !'],
   },
 };
 
-/* ── Détection automatique de la saison ── */
+/* ──────────────────────────────────────────────
+   DÉTECTION SAISON
+   ────────────────────────────────────────────── */
 function detectSeason() {
-  const month = new Date().getMonth(); // 0 = janvier
-  if (month >= 2 && month <= 4) return 'spring';
-  if (month >= 5 && month <= 7) return 'summer';
-  if (month >= 8 && month <= 10) return 'autumn';
+  const m = new Date().getMonth(); // 0-based
+  if (m >= 2 && m <= 4) return 'spring';
+  if (m >= 5 && m <= 7) return 'summer';
+  if (m >= 8 && m <= 10) return 'autumn';
   return 'winter';
 }
 
-/* ── Appliquer la saison ── */
+/* ──────────────────────────────────────────────
+   APPLICATION DE LA SAISON
+   ────────────────────────────────────────────── */
 let currentSeason = detectSeason();
 
 function applySeason(season, animate = false) {
-  if (season === currentSeason && !animate) return;
-
-  const overlay = document.getElementById('season-overlay');
   const data = SEASONS[season];
   if (!data) return;
 
@@ -61,237 +71,495 @@ function applySeason(season, animate = false) {
     document.documentElement.setAttribute('data-season', season);
 
     // Navbar badge
-    const icon = document.getElementById('season-icon');
-    const name = document.getElementById('season-name');
-    if (icon) icon.textContent = data.emoji;
-    if (name) name.textContent = data.name;
+    setText('badge-icon',  data.emoji);
+    setText('badge-name',  data.name);
 
-    // Bandeau saisonnier
-    const ribIcon = document.getElementById('ribbon-icon');
-    const ribIcon2 = document.getElementById('ribbon-icon2');
-    const ribText = document.getElementById('ribbon-text');
-    if (ribIcon) ribIcon.textContent = data.emoji;
-    if (ribIcon2) ribIcon2.textContent = data.emoji;
-    if (ribText) ribText.textContent = `Collection ${data.name} — ${data.quote}`;
+    // Bandeau
+    const ribbonItems = data.ribbonItems;
+    const track = document.getElementById('ribbon-track');
+    if (track) {
+      // Dupliquer pour boucle infinie
+      const allItems = [...ribbonItems, ...ribbonItems, ...ribbonItems];
+      track.innerHTML = allItems.map(t => `<span>${t}</span>`).join('');
+    }
 
-    // Carte boutique
-    const bIcon = document.getElementById('boutique-season-icon');
-    const bTitle = document.getElementById('boutique-season-title');
-    const bText = document.getElementById('boutique-season-text');
-    if (bIcon) bIcon.textContent = data.emoji;
-    if (bTitle) bTitle.textContent = data.collectionTitle;
-    if (bText) bText.textContent = data.collectionText;
+    // Infos boutique — carte saison
+    setText('info-season-icon',  data.emoji);
+    setText('info-season-title', data.collectionTitle);
+    setText('info-season-text',  data.collectionText);
 
     // Switcher boutons
-    document.querySelectorAll('.ss-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.season === season);
+    document.querySelectorAll('.ss-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.season === season);
     });
 
-    // Regénérer les éléments du fond héros
+    // Accessoires grenouille
+    document.querySelectorAll('.acc-spring,.acc-summer,.acc-autumn,.acc-winter').forEach(el => {
+      el.setAttribute('opacity', '0');
+    });
+    const accEl = document.querySelector(`.acc-${season}`);
+    if (accEl) accEl.setAttribute('opacity', '1');
+
+    // Particules
+    buildParticles(season);
+
+    // Fond hero
     buildHeroBg();
   };
 
+  const overlay = document.getElementById('season-overlay');
   if (animate && overlay) {
     overlay.classList.add('flash');
-    setTimeout(() => {
-      doApply();
-      overlay.classList.remove('flash');
-    }, 350);
+    setTimeout(() => { doApply(); overlay.classList.remove('flash'); }, 380);
   } else {
     doApply();
   }
 }
 
-/* ── Génération du fond héros (lily pads + bulles) ── */
+function setText(id, text) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
+
+/* ──────────────────────────────────────────────
+   PARTICULES SAISONNIÈRES
+   ────────────────────────────────────────────── */
+function buildParticles(season) {
+  const layer = document.getElementById('particles-layer');
+  if (!layer) return;
+  layer.innerHTML = '';
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const cfg = SEASONS[season]?.particles;
+  if (!cfg) return;
+
+  for (let i = 0; i < cfg.count; i++) {
+    const el = document.createElement('div');
+    el.className = 'particle';
+    el.textContent = cfg.emoji;
+
+    const dur    = cfg.minDur + Math.random() * (cfg.maxDur - cfg.minDur);
+    const delay  = Math.random() * -dur * 1.5; // démarrage aléatoire dans le cycle
+    const left   = Math.random() * 100;
+    const size   = 0.7 + Math.random() * 1.1;
+    const drift  = (Math.random() - 0.5) * 2 * cfg.drift;
+    const spin   = cfg.spin ? (Math.random() * 360 - 180) + 'deg' : '0deg';
+
+    Object.assign(el.style, {
+      left: `${left}%`,
+      fontSize: `${size}rem`,
+      animationDuration: `${dur}s`,
+      animationDelay: `${delay}s`,
+      '--drift': `${drift}px`,
+      '--spin': spin,
+    });
+    layer.appendChild(el);
+  }
+}
+
+/* ──────────────────────────────────────────────
+   FOND HERO (lily pads + bulles)
+   ────────────────────────────────────────────── */
 function buildHeroBg() {
   const bg = document.getElementById('hero-bg');
   if (!bg) return;
+  bg.querySelectorAll('.lily-pad,.bubble-el').forEach(el => el.remove());
 
-  // Nettoyer les anciens éléments générés
-  bg.querySelectorAll('.lily-pad, .bubble').forEach(el => el.remove());
-
-  const lilyData = [
-    { x: '8%',  y: '65%', size: 90,  duration: 9,  delay: 0,   rotS: '-5deg',  rotE: '8deg'  },
-    { x: '82%', y: '72%', size: 130, duration: 11, delay: 1.5, rotS: '4deg',   rotE: '-6deg' },
-    { x: '45%', y: '82%', size: 70,  duration: 8,  delay: 0.7, rotS: '2deg',   rotE: '10deg' },
-    { x: '18%', y: '88%', size: 100, duration: 10, delay: 2,   rotS: '-8deg',  rotE: '4deg'  },
-    { x: '65%', y: '58%', size: 55,  duration: 7,  delay: 1,   rotS: '6deg',   rotE: '-4deg' },
-    { x: '35%', y: '55%', size: 40,  duration: 12, delay: 3,   rotS: '-3deg',  rotE: '7deg'  },
+  const lily = [
+    { x:'8%',  y:'62%', s:95,  dur:9,  del:0,   r0:'-6deg',  r1:'7deg'  },
+    { x:'80%', y:'70%', s:130, dur:11, del:1.5, r0:'4deg',   r1:'-6deg' },
+    { x:'42%', y:'80%', s:65,  dur:8,  del:.7,  r0:'3deg',   r1:'10deg' },
+    { x:'20%', y:'85%', s:100, dur:10, del:2,   r0:'-8deg',  r1:'5deg'  },
+    { x:'62%', y:'55%', s:52,  dur:7,  del:1,   r0:'6deg',   r1:'-3deg' },
+    { x:'33%', y:'52%', s:42,  dur:13, del:3,   r0:'-2deg',  r1:'8deg'  },
   ];
-
-  lilyData.forEach(({ x, y, size, duration, delay, rotS, rotE }) => {
-    const pad = document.createElement('div');
-    pad.className = 'lily-pad';
-    Object.assign(pad.style, {
-      left: x,
-      top: y,
-      width: `${size}px`,
-      height: `${size}px`,
-      '--duration': `${duration}s`,
-      '--delay': `${delay}s`,
-      '--rot-start': rotS,
-      '--rot-end': rotE,
+  lily.forEach(({ x,y,s,dur,del,r0,r1 }) => {
+    const el = document.createElement('div');
+    el.className = 'lily-pad';
+    Object.assign(el.style, {
+      left:x, top:y,
+      width:`${s}px`, height:`${s}px`,
+      '--dur':`${dur}s`, '--del':`${del}s`, '--r0':r0, '--r1':r1,
     });
-    bg.appendChild(pad);
+    bg.appendChild(el);
   });
 
-  const bubbleData = [
-    { x: '12%',  size: 10, duration: 5,  delay: 0   },
-    { x: '28%',  size: 7,  duration: 7,  delay: 1.5 },
-    { x: '52%',  size: 13, duration: 6,  delay: 0.8 },
-    { x: '73%',  size: 9,  duration: 8,  delay: 2.5 },
-    { x: '88%',  size: 6,  duration: 5,  delay: 1.2 },
-    { x: '40%',  size: 11, duration: 9,  delay: 3   },
-    { x: '62%',  size: 8,  duration: 6,  delay: 0.3 },
+  const bubs = [
+    { x:'10%',  s:10, dur:5,  del:0   },
+    { x:'25%',  s:7,  dur:7,  del:1.5 },
+    { x:'50%',  s:13, dur:6,  del:.8  },
+    { x:'70%',  s:9,  dur:8,  del:2.5 },
+    { x:'87%',  s:6,  dur:5,  del:1.2 },
+    { x:'40%',  s:11, dur:9,  del:3   },
+    { x:'60%',  s:8,  dur:6,  del:.3  },
   ];
-
-  bubbleData.forEach(({ x, size, duration, delay }) => {
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble';
-    Object.assign(bubble.style, {
-      left: x,
-      bottom: '5%',
-      width: `${size}px`,
-      height: `${size}px`,
-      '--duration': `${duration}s`,
-      '--delay': `${delay}s`,
+  bubs.forEach(({ x,s,dur,del }) => {
+    const el = document.createElement('div');
+    el.className = 'bubble-el';
+    Object.assign(el.style, {
+      left:x, bottom:'6%',
+      width:`${s}px`, height:`${s}px`,
+      '--dur':`${dur}s`, '--del':`${del}s`,
     });
-    bg.appendChild(bubble);
+    bg.appendChild(el);
   });
 }
 
-/* ── Navbar scroll ── */
+/* ──────────────────────────────────────────────
+   JEU GRENOUILLE — grenouilles cachées
+   ────────────────────────────────────────────── */
+let frogsFound = 0;
+const TOTAL_FROGS = 5;
+
+function initFrogGame() {
+  document.querySelectorAll('.hidden-frog').forEach(frog => {
+    frog.addEventListener('click', e => onHiddenFrogClick(e, frog));
+  });
+  updateFrogCounter();
+}
+
+function onHiddenFrogClick(e, frog) {
+  e.stopPropagation();
+  if (frog.classList.contains('found')) return;
+
+  frog.classList.add('found');
+  frogsFound++;
+  updateFrogCounter();
+  spawnConfettiAt(e.clientX, e.clientY);
+
+  if (frogsFound >= TOTAL_FROGS) {
+    setTimeout(showAchievement, 800);
+  }
+}
+
+function updateFrogCounter() {
+  setText('frog-count', frogsFound);
+  const counter = document.getElementById('frog-counter');
+  if (counter) {
+    counter.classList.add('bump');
+    setTimeout(() => counter.classList.remove('bump'), 300);
+  }
+}
+
+function showAchievement() {
+  const popup = document.getElementById('achievement-popup');
+  if (popup) {
+    popup.classList.add('show');
+    popup.setAttribute('aria-hidden', 'false');
+  }
+}
+
+document.addEventListener('click', e => {
+  const btn = e.target.closest('#achievement-close');
+  if (btn) {
+    const popup = document.getElementById('achievement-popup');
+    if (popup) { popup.classList.remove('show'); popup.setAttribute('aria-hidden','true'); }
+  }
+});
+
+/* ──────────────────────────────────────────────
+   CONFETTIS / MINI GRENOUILLES AU CLIC
+   ────────────────────────────────────────────── */
+function spawnConfettiAt(x, y) {
+  const emojis = ['🐸','✨','🎉','💚'];
+  const count = 6;
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('div');
+    el.className = 'mini-frog-pop';
+    el.textContent = emojis[i % emojis.length];
+    const angle = (360 / count) * i + Math.random() * 20 - 10;
+    const dist  = 60 + Math.random() * 60;
+    const rad   = angle * Math.PI / 180;
+    const tx    = Math.cos(rad) * dist;
+    const ty    = Math.sin(rad) * dist;
+    Object.assign(el.style, {
+      left: `${x}px`, top: `${y}px`,
+      '--tx': `${tx}px`, '--ty': `${ty}px`,
+      '--tr': `${(Math.random()-0.5)*120}deg`,
+    });
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 900);
+  }
+}
+
+/* ──────────────────────────────────────────────
+   GRENOUILLE PRINCIPALE — interactions
+   ────────────────────────────────────────────── */
+let winkTimer = null;
+let speechTimer = null;
+
+function initMainFrog() {
+  const frog = document.getElementById('main-frog');
+  const hero = document.querySelector('.hero');
+  if (!frog) return;
+
+  // Clic : saut + mini grenouilles
+  frog.addEventListener('click', e => {
+    e.stopPropagation();
+    frog.classList.remove('click-jump');
+    void frog.offsetWidth; // reflow pour relancer l'animation
+    frog.classList.add('click-jump');
+    frog.addEventListener('animationend', () => frog.classList.remove('click-jump'), { once: true });
+
+    // Spawn 3 mini grenouilles depuis la position de la grenouille
+    const rect = frog.getBoundingClientRect();
+    spawnMiniFromFrog(rect.left + rect.width / 2, rect.top + rect.height / 3, 5);
+    showSpeech();
+  });
+
+  // Clic sur le hero (hors grenouille) → ripple
+  if (hero) {
+    hero.addEventListener('click', e => {
+      if (e.target.closest('.main-frog,.hidden-frog,.hero-btns,.scroll-hint')) return;
+      createHeroRipple(e.clientX, e.clientY, hero);
+    });
+  }
+
+  // Clin d'œil périodique
+  scheduleWink(frog);
+  // Ribbit périodique
+  scheduleSpeech();
+}
+
+function spawnMiniFromFrog(cx, cy, count) {
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('div');
+    el.className = 'mini-frog-pop';
+    el.textContent = '🐸';
+    const angle = (360 / count) * i + Math.random() * 30;
+    const dist  = 70 + Math.random() * 80;
+    const rad   = angle * Math.PI / 180;
+    Object.assign(el.style, {
+      left: `${cx}px`, top: `${cy}px`,
+      '--tx': `${Math.cos(rad)*dist}px`,
+      '--ty': `${Math.sin(rad)*dist}px`,
+      '--tr': `${(Math.random()-0.5)*180}deg`,
+      animationDuration: `${.6+Math.random()*.4}s`,
+    });
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1100);
+  }
+}
+
+function createHeroRipple(x, y, hero) {
+  const rect = hero.getBoundingClientRect();
+  const el   = document.createElement('div');
+  el.className = 'hero-click-ripple';
+  Object.assign(el.style, {
+    left: `${x - rect.left}px`,
+    top:  `${y - rect.top}px`,
+  });
+  hero.appendChild(el);
+  setTimeout(() => el.remove(), 800);
+}
+
+function scheduleWink(frog) {
+  clearTimeout(winkTimer);
+  winkTimer = setTimeout(() => {
+    frog.classList.add('winking');
+    setTimeout(() => {
+      frog.classList.remove('winking');
+      scheduleWink(frog);
+    }, 400);
+  }, 7000 + Math.random() * 6000);
+}
+
+function scheduleSpeech() {
+  clearTimeout(speechTimer);
+  speechTimer = setTimeout(() => {
+    showSpeech();
+    scheduleSpeech();
+  }, 10000 + Math.random() * 8000);
+}
+
+function showSpeech() {
+  const bubble = document.getElementById('speech-bubble');
+  const textEl = document.getElementById('speech-text');
+  if (!bubble || !textEl) return;
+
+  const speeches = SEASONS[currentSeason]?.speeches || ['Ribbit !'];
+  const msg = speeches[Math.floor(Math.random() * speeches.length)];
+  textEl.textContent = msg;
+  bubble.classList.add('visible');
+  setTimeout(() => bubble.classList.remove('visible'), 2500);
+}
+
+/* ──────────────────────────────────────────────
+   NAVBAR SCROLL
+   ────────────────────────────────────────────── */
 function initNavbar() {
   const nav = document.getElementById('navbar');
   if (!nav) return;
-
-  const onScroll = () => {
-    nav.classList.toggle('scrolled', window.scrollY > 40);
-  };
-  window.addEventListener('scroll', onScroll, { passive: true });
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+  window.addEventListener('scroll', onScroll, { passive:true });
   onScroll();
 }
 
-/* ── Menu burger mobile ── */
+/* ──────────────────────────────────────────────
+   MENU BURGER MOBILE
+   ────────────────────────────────────────────── */
 function initBurger() {
   const burger = document.getElementById('nav-burger');
-  const links = document.getElementById('nav-links');
+  const links  = document.getElementById('nav-links');
   if (!burger || !links) return;
 
   burger.addEventListener('click', () => {
     const open = links.classList.toggle('open');
-    burger.setAttribute('aria-expanded', open);
+    burger.setAttribute('aria-expanded', String(open));
   });
-
-  // Fermer au clic sur un lien
-  links.querySelectorAll('a').forEach(a => {
+  links.querySelectorAll('a').forEach(a =>
     a.addEventListener('click', () => {
       links.classList.remove('open');
-      burger.setAttribute('aria-expanded', 'false');
-    });
-  });
-
-  // Fermer en cliquant hors du menu
+      burger.setAttribute('aria-expanded','false');
+    })
+  );
   document.addEventListener('click', e => {
     if (!links.contains(e.target) && !burger.contains(e.target)) {
       links.classList.remove('open');
-      burger.setAttribute('aria-expanded', 'false');
+      burger.setAttribute('aria-expanded','false');
     }
   });
 }
 
-/* ── Scroll reveal (IntersectionObserver) ── */
+/* ──────────────────────────────────────────────
+   SCROLL REVEAL
+   ────────────────────────────────────────────── */
 function initScrollReveal() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('revealed');
-        observer.unobserve(entry.target);
-      }
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('revealed'); obs.unobserve(e.target); }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold:.1, rootMargin:'0px 0px -40px 0px' });
 
-  document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+  document.querySelectorAll('[data-reveal]').forEach(el => obs.observe(el));
 }
 
-/* ── Switcher de saison ── */
+/* ──────────────────────────────────────────────
+   SWITCHER SAISON
+   ────────────────────────────────────────────── */
 function initSeasonSwitcher() {
   document.querySelectorAll('.ss-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      applySeason(btn.dataset.season, true);
-    });
+    btn.addEventListener('click', () => applySeason(btn.dataset.season, true));
   });
 }
 
-/* ── Interaction grenouille (rebond au clic) ── */
-function initFrogInteraction() {
-  const frog = document.getElementById('hero-frog');
-  if (!frog) return;
-
-  frog.addEventListener('click', () => {
-    frog.style.animationPlayState = 'paused';
-    frog.style.transition = 'transform .4s cubic-bezier(.34,1.56,.64,1)';
-    frog.style.transform = 'translateY(-50px) scale(1.08) rotate(5deg)';
-    setTimeout(() => {
-      frog.style.transform = '';
-      setTimeout(() => {
-        frog.style.transition = '';
-        frog.style.animationPlayState = '';
-      }, 400);
-    }, 350);
-  });
-}
-
-/* ── Année dans le footer ── */
-function setYear() {
-  const el = document.getElementById('year');
-  if (el) el.textContent = new Date().getFullYear();
-}
-
-/* ── Smooth scroll pour les ancres ── */
+/* ──────────────────────────────────────────────
+   SMOOTH SCROLL
+   ────────────────────────────────────────────── */
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       const target = document.querySelector(a.getAttribute('href'));
       if (!target) return;
       e.preventDefault();
-      const offset = 80; // hauteur navbar
-      const top = target.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
+      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80, behavior:'smooth' });
     });
   });
 }
 
-/* ── Parallaxe légère sur le hero ── */
+/* ──────────────────────────────────────────────
+   PARALLAXE HERO LÉGÈRE
+   ────────────────────────────────────────────── */
 function initParallax() {
-  const heroBg = document.getElementById('hero-bg');
-  if (!heroBg || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
+  const bg = document.getElementById('hero-bg');
+  if (!bg || window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
   let ticking = false;
   window.addEventListener('scroll', () => {
     if (!ticking) {
       requestAnimationFrame(() => {
-        const y = window.scrollY;
-        heroBg.style.transform = `translateY(${y * 0.3}px)`;
+        bg.style.transform = `translateY(${window.scrollY * 0.28}px)`;
         ticking = false;
       });
       ticking = true;
     }
-  }, { passive: true });
+  }, { passive:true });
 }
 
-/* ── Init globale ── */
+/* ──────────────────────────────────────────────
+   CURSEUR GRENOUILLE (seulement sur hero/desktop)
+   ────────────────────────────────────────────── */
+function initFrogCursor() {
+  if (window.innerWidth < 768) return;
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+  const cursor = document.createElement('div');
+  cursor.style.cssText = `
+    position:fixed; font-size:1.4rem; pointer-events:none; z-index:9998;
+    transition:transform .12s ease, opacity .2s ease;
+    transform:translate(-50%,-50%) scale(0);
+    opacity:0;
+  `;
+  cursor.textContent = '🐸';
+  document.body.appendChild(cursor);
+
+  hero.addEventListener('mousemove', e => {
+    cursor.style.left  = `${e.clientX}px`;
+    cursor.style.top   = `${e.clientY}px`;
+    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+    cursor.style.opacity = '1';
+  });
+  hero.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(0)';
+    cursor.style.opacity = '0';
+  });
+}
+
+/* ──────────────────────────────────────────────
+   TICKER GRENOUILLE — survol ralentit
+   ────────────────────────────────────────────── */
+function initTicker() {
+  const track = document.querySelector('.ticker-track');
+  if (!track) return;
+  track.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
+  track.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
+}
+
+/* ──────────────────────────────────────────────
+   EASTER EGG — logo click
+   ────────────────────────────────────────────── */
+let logoClickCount = 0;
+function initLogoEasterEgg() {
+  const logo = document.querySelector('.nav-logo');
+  if (!logo) return;
+  logo.addEventListener('click', () => {
+    logoClickCount++;
+    if (logoClickCount >= 5) {
+      logoClickCount = 0;
+      showSpeech();
+      spawnConfettiAt(window.innerWidth/2, 80);
+    }
+  });
+}
+
+/* ──────────────────────────────────────────────
+   ANNÉE FOOTER
+   ────────────────────────────────────────────── */
+function setYear() {
+  const el = document.getElementById('footer-year');
+  if (el) el.textContent = new Date().getFullYear();
+}
+
+/* ──────────────────────────────────────────────
+   INIT GLOBALE
+   ────────────────────────────────────────────── */
 function init() {
   applySeason(detectSeason(), false);
-  buildHeroBg();
   initNavbar();
   initBurger();
   initScrollReveal();
   initSeasonSwitcher();
-  initFrogInteraction();
+  initMainFrog();
+  initFrogGame();
   initSmoothScroll();
   initParallax();
+  initFrogCursor();
+  initTicker();
+  initLogoEasterEgg();
   setYear();
+
+  // Première bulle après 3s
+  setTimeout(showSpeech, 3000);
 }
 
 if (document.readyState === 'loading') {

@@ -4,10 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Egal A — Des grandes marques, des petits prix | La Baule</title>
-  <meta name="description" content="Egal A à La Baule — Déstockage de grandes marques à petits prix. Mode, accessoires et plus, renouvelés chaque semaine.">
-  <meta name="keywords" content="déstockage, grandes marques, La Baule, mode, vêtements, petits prix">
-  <meta property="og:title" content="Egal A — La Baule">
-  <meta property="og:description" content="Des grandes marques, des petits prix à La Baule.">
+  <meta name="description" content="Egal A à La Baule — Déstockage de grandes marques à petits prix. 146 Av. du Général de Gaulle, 44500 La Baule-Escoublac.">
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,178 +12,231 @@
 </head>
 <body>
 
-  <!-- Overlay de transition saison -->
-  <div class="season-transition-overlay" id="season-overlay"></div>
+  <!-- Overlay transition saison -->
+  <div class="season-overlay" id="season-overlay" aria-hidden="true"></div>
 
-  <!-- ========== NAVIGATION ========== -->
+  <!-- Particules saisonnières -->
+  <div class="particles-layer" id="particles-layer" aria-hidden="true"></div>
+
+  <!-- Compteur de grenouilles cachées -->
+  <div class="frog-counter" id="frog-counter" title="Trouve toutes les grenouilles cachées !">
+    <span class="frog-counter-emoji">🐸</span>
+    <span id="frog-count">0</span><span class="frog-counter-total">/5</span>
+  </div>
+
+  <!-- Achievement popup -->
+  <div class="achievement-popup" id="achievement-popup" role="dialog" aria-hidden="true">
+    <div class="achievement-inner">
+      <div class="achievement-frogs">🐸🐸🐸🐸🐸</div>
+      <h3>Bravo, expert·e grenouille&nbsp;!</h3>
+      <p>Tu as trouvé toutes les grenouilles cachées.<br>
+         <strong>Montre ce message en boutique pour une surprise&nbsp;🎁</strong></p>
+      <button class="btn btn-primary achievement-btn" id="achievement-close">Super !</button>
+    </div>
+  </div>
+
+  <!-- ══════════ NAVIGATION ══════════ -->
   <nav class="navbar" id="navbar">
     <div class="nav-container">
-      <a href="#" class="nav-logo">
-        <svg viewBox="0 0 50 50" class="nav-frog-svg" aria-hidden="true">
-          <ellipse cx="25" cy="32" rx="18" ry="15" fill="var(--color-primary)"/>
+      <a href="#" class="nav-logo" aria-label="Egal A — Accueil">
+        <svg viewBox="0 0 50 50" class="nav-frog" aria-hidden="true">
+          <ellipse cx="25" cy="33" rx="18" ry="14" fill="var(--color-primary)"/>
           <ellipse cx="25" cy="27" rx="16" ry="14" fill="var(--color-primary)"/>
-          <circle cx="17" cy="20" r="7" fill="var(--color-primary-light)"/>
-          <circle cx="33" cy="20" r="7" fill="var(--color-primary-light)"/>
+          <circle cx="17" cy="20" r="7"   fill="var(--color-primary-light)"/>
+          <circle cx="33" cy="20" r="7"   fill="var(--color-primary-light)"/>
           <circle cx="17" cy="20" r="5.5" fill="white"/>
           <circle cx="33" cy="20" r="5.5" fill="white"/>
           <circle cx="18" cy="21" r="3.5" fill="#1a2a1a"/>
           <circle cx="34" cy="21" r="3.5" fill="#1a2a1a"/>
-          <circle cx="19.5" cy="19.5" r="1.2" fill="white"/>
-          <circle cx="35.5" cy="19.5" r="1.2" fill="white"/>
-          <path d="M 17 34 Q 25 40 33 34" stroke="#1a2a1a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <circle cx="19.5" cy="19.5" r="1.3" fill="white"/>
+          <circle cx="35.5" cy="19.5" r="1.3" fill="white"/>
+          <path d="M17 34 Q25 40 33 34" stroke="#1a2a1a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- Wink (affiché par JS) -->
+          <line class="frog-wink" x1="14" y1="20" x2="20" y2="20" stroke="#1a2a1a" stroke-width="2" stroke-linecap="round" opacity="0"/>
         </svg>
-        <span class="nav-logo-text">Egal<span class="nav-logo-accent">A</span></span>
+        <span class="nav-logo-name">Egal <span class="nav-logo-accent">A</span></span>
       </a>
 
       <ul class="nav-links" id="nav-links">
-        <li><a href="#concept" class="nav-link">Le Concept</a></li>
-        <li><a href="#marques" class="nav-link">Nos Marques</a></li>
-        <li><a href="#boutique" class="nav-link">La Boutique</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><a href="#concept"  class="nav-link">Le Concept</a></li>
+        <li><a href="#promo"    class="nav-link">Déstockage</a></li>
+        <li><a href="#photos"   class="nav-link">La Boutique</a></li>
+        <li><a href="#contact"  class="nav-link">Contact</a></li>
       </ul>
 
       <div class="nav-right">
-        <div class="season-badge" id="season-badge" title="Changer de saison">
-          <span class="season-badge-icon" id="season-icon">🌸</span>
-          <span class="season-badge-name" id="season-name">Printemps</span>
+        <div class="season-badge" id="season-badge">
+          <span id="badge-icon">🌸</span>
+          <span id="badge-name">Printemps</span>
         </div>
-        <button class="nav-burger" id="nav-burger" aria-label="Menu">
+        <button class="nav-burger" id="nav-burger" aria-label="Menu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
     </div>
   </nav>
 
-  <!-- ========== HERO ========== -->
+  <!-- ══════════ HERO ══════════ -->
   <section class="hero" id="hero">
-    <!-- Fond animé -->
     <div class="hero-bg" id="hero-bg">
-      <div class="water-surface"></div>
-      <!-- Les lily pads et bulles sont créés en JS -->
+      <div class="water-base"></div>
     </div>
 
     <div class="hero-content">
-      <!-- Texte gauche -->
+      <!-- Texte -->
       <div class="hero-text">
         <div class="hero-location">
-          <span class="location-pulse"></span>
-          La Baule, Loire-Atlantique
+          <span class="loc-dot"></span>
+          La Baule-Escoublac
         </div>
-        <h1 class="hero-title">
-          <span class="hero-title-egal">Egal</span><span class="hero-title-a">A</span>
+        <h1 class="hero-h1">
+          <span class="h1-egal">Egal</span>
+          <span class="h1-space">&nbsp;</span>
+          <span class="h1-a">A</span>
         </h1>
         <p class="hero-slogan">
-          <em class="slogan-line1">Des grandes marques,</em>
-          <strong class="slogan-line2">des petits prix</strong>
+          <em>Des grandes marques,</em>
+          <strong>des petits prix</strong>
         </p>
-        <p class="hero-desc">
-          Retrouvez chaque semaine de nouvelles arrivées de grandes enseignes à prix déstockage,
-          au cœur de La Baule.
+        <p class="hero-sub">
+          Déstockage de grandes enseignes à prix cassés,<br>
+          renouvelé chaque semaine au cœur de La Baule.
         </p>
-        <div class="hero-actions">
-          <a href="#boutique" class="btn btn-primary">
-            <span>Nous trouver</span>
-            <svg viewBox="0 0 20 20" width="16" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M5 10h10M11 6l4 4-4 4"/>
-            </svg>
-          </a>
+        <div class="hero-btns">
+          <a href="#photos" class="btn btn-primary">Voir la boutique</a>
           <a href="#concept" class="btn btn-ghost">Découvrir</a>
         </div>
       </div>
 
-      <!-- Grenouille centrale -->
-      <div class="hero-frog-wrap">
-        <div class="frog-aura"></div>
-        <svg viewBox="0 0 280 300" class="hero-frog" id="hero-frog" aria-label="Mascotte Egal A — grenouille avec sacs shopping">
+      <!-- Grenouille -->
+      <div class="hero-frog-zone">
+        <div class="frog-glow"></div>
 
-          <!-- Ombre -->
-          <ellipse cx="140" cy="285" rx="85" ry="13" fill="rgba(0,0,0,0.12)"/>
+        <!-- Speech bubble -->
+        <div class="speech-bubble" id="speech-bubble" aria-live="polite">
+          <span id="speech-text">Ribbit&nbsp;!</span>
+        </div>
 
-          <!-- Pattes arrière -->
-          <path d="M 78 205 Q 52 230 42 258 Q 38 270 52 268 Q 63 266 67 254 Q 73 238 90 222" fill="var(--color-primary-dark)"/>
-          <path d="M 202 205 Q 228 230 238 258 Q 242 270 228 268 Q 217 266 213 254 Q 207 238 190 222" fill="var(--color-primary-dark)"/>
+        <svg viewBox="0 0 280 300" class="main-frog" id="main-frog"
+             role="img" aria-label="Grenouille mascotte Egal A avec sacs de shopping">
+          <ellipse cx="140" cy="286" rx="82" ry="13" fill="rgba(0,0,0,0.12)"/>
+
+          <!-- Pattes -->
+          <path d="M78 206 Q52 232 42 260 Q38 272 52 270 Q63 268 67 256 Q73 240 90 224" fill="var(--frog-dark)"/>
+          <path d="M202 206 Q228 232 238 260 Q242 272 228 270 Q217 268 213 256 Q207 240 190 224" fill="var(--frog-dark)"/>
 
           <!-- Corps -->
-          <ellipse cx="140" cy="200" rx="82" ry="72" fill="var(--color-primary)"/>
+          <ellipse cx="140" cy="200" rx="82" ry="72" fill="var(--frog-body)"/>
+          <ellipse cx="140" cy="212" rx="54" ry="46" fill="var(--frog-belly)" opacity=".55"/>
 
-          <!-- Ventre -->
-          <ellipse cx="140" cy="212" rx="54" ry="46" fill="var(--color-primary-light)" opacity="0.55"/>
-
-          <!-- Bras gauche -->
-          <path d="M 70 178 Q 38 196 22 224" stroke="var(--color-primary)" stroke-width="20" fill="none" stroke-linecap="round"/>
-          <!-- Sac gauche (jaune) -->
-          <g class="bag bag-left">
-            <rect x="5" y="224" width="40" height="36" rx="5" fill="var(--color-accent)" stroke="var(--color-primary-dark)" stroke-width="2"/>
-            <path d="M 13 224 Q 25 210 37 224" stroke="var(--color-primary-dark)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-            <text x="25" y="246" font-size="15" text-anchor="middle" font-family="serif" font-weight="bold" fill="var(--color-text)">A</text>
+          <!-- Bras gauche + sac jaune -->
+          <path d="M70 178 Q38 196 22 226" stroke="var(--frog-body)" stroke-width="20" fill="none" stroke-linecap="round"/>
+          <g class="bag-left">
+            <rect x="4" y="226" width="40" height="36" rx="5" fill="var(--color-accent-solid)"/>
+            <path d="M12 226 Q24 212 36 226" stroke="var(--color-primary-dark)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <text x="24" y="248" font-size="15" text-anchor="middle" font-family="serif" font-weight="bold" fill="var(--color-text)">A</text>
           </g>
 
-          <!-- Bras droit -->
-          <path d="M 210 178 Q 242 196 258 224" stroke="var(--color-primary)" stroke-width="20" fill="none" stroke-linecap="round"/>
-          <!-- Sac droit (accent2) -->
-          <g class="bag bag-right">
-            <rect x="235" y="224" width="40" height="36" rx="5" fill="var(--color-accent2)" stroke="var(--color-primary-dark)" stroke-width="2"/>
-            <path d="M 243 224 Q 255 210 267 224" stroke="var(--color-primary-dark)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-            <text x="255" y="244" font-size="13" text-anchor="middle" font-family="sans-serif" font-weight="bold" fill="var(--color-surface)">%</text>
+          <!-- Bras droit + sac rouge -->
+          <path d="M210 178 Q242 196 258 226" stroke="var(--frog-body)" stroke-width="20" fill="none" stroke-linecap="round"/>
+          <g class="bag-right">
+            <rect x="236" y="226" width="40" height="36" rx="5" fill="#ef5350"/>
+            <path d="M244 226 Q256 212 268 226" stroke="#b71c1c" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <text x="256" y="245" font-size="13" text-anchor="middle" font-family="sans-serif" font-weight="bold" fill="white">%</text>
           </g>
 
           <!-- Tête -->
-          <ellipse cx="140" cy="125" rx="76" ry="70" fill="var(--color-primary)"/>
+          <ellipse cx="140" cy="125" rx="76" ry="70" fill="var(--frog-body)"/>
 
-          <!-- Yeux bosses -->
-          <circle cx="104" cy="94" r="30" fill="var(--color-primary-light)"/>
-          <circle cx="176" cy="94" r="30" fill="var(--color-primary-light)"/>
-
-          <!-- Yeux blancs -->
+          <!-- Yeux -->
+          <circle cx="104" cy="94" r="30" fill="var(--frog-light)"/>
+          <circle cx="176" cy="94" r="30" fill="var(--frog-light)"/>
           <circle cx="104" cy="94" r="25" fill="white"/>
           <circle cx="176" cy="94" r="25" fill="white"/>
 
-          <!-- Pupilles -->
-          <circle cx="107" cy="96" r="15" fill="#0f1f0f"/>
-          <circle cx="179" cy="96" r="15" fill="#0f1f0f"/>
+          <!-- Pupilles normales -->
+          <circle cx="107" cy="96" r="15" fill="#0f1f0f" class="pupil-normal"/>
+          <circle cx="179" cy="96" r="15" fill="#0f1f0f" class="pupil-normal"/>
+
+          <!-- Clin d'œil gauche (caché par défaut) -->
+          <line class="eye-wink" x1="92" y1="94" x2="116" y2="94" stroke="#0f1f0f" stroke-width="4" stroke-linecap="round" opacity="0"/>
 
           <!-- Reflets -->
-          <circle cx="113" cy="89" r="5.5" fill="white"/>
-          <circle cx="185" cy="89" r="5.5" fill="white"/>
-          <circle cx="104" cy="104" r="3" fill="white" opacity="0.5"/>
-          <circle cx="176" cy="104" r="3" fill="white" opacity="0.5"/>
+          <circle cx="113" cy="89" r="5.5" fill="white" class="pupil-normal"/>
+          <circle cx="185" cy="89" r="5.5" fill="white" class="pupil-normal"/>
 
           <!-- Narines -->
-          <ellipse cx="131" cy="136" rx="5.5" ry="3.5" fill="var(--color-primary-dark)" opacity="0.5"/>
-          <ellipse cx="149" cy="136" rx="5.5" ry="3.5" fill="var(--color-primary-dark)" opacity="0.5"/>
+          <ellipse cx="131" cy="136" rx="5.5" ry="3.5" fill="var(--frog-dark)" opacity=".45"/>
+          <ellipse cx="149" cy="136" rx="5.5" ry="3.5" fill="var(--frog-dark)" opacity=".45"/>
 
           <!-- Sourire -->
-          <path d="M 106 156 Q 140 178 174 156" stroke="var(--color-primary-dark)" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M106 156 Q140 178 174 156" stroke="var(--frog-dark)" stroke-width="4" fill="none" stroke-linecap="round"/>
 
-          <!-- Joues roses -->
-          <circle cx="84" cy="143" r="16" fill="#ff9eb5" opacity="0.28"/>
-          <circle cx="196" cy="143" r="16" fill="#ff9eb5" opacity="0.28"/>
+          <!-- Joues -->
+          <circle cx="84"  cy="143" r="16" fill="#ff9eb5" opacity=".28"/>
+          <circle cx="196" cy="143" r="16" fill="#ff9eb5" opacity=".28"/>
+
+          <!-- Accessoires saisonniers -->
+          <!-- Fleur printemps -->
+          <g class="acc-spring" opacity="1">
+            <circle cx="168" cy="68" r="10" fill="#f48fb1"/>
+            <circle cx="156" cy="60" r="8"  fill="#f48fb1"/>
+            <circle cx="180" cy="60" r="8"  fill="#f48fb1"/>
+            <circle cx="168" cy="56" r="8"  fill="#f48fb1"/>
+            <circle cx="168" cy="63" r="6"  fill="#fff176"/>
+          </g>
+          <!-- Lunettes été -->
+          <g class="acc-summer" opacity="0">
+            <rect x="88" y="82" width="28" height="18" rx="9" fill="#f57c00" opacity=".9"/>
+            <rect x="158" y="82" width="28" height="18" rx="9" fill="#f57c00" opacity=".9"/>
+            <line x1="116" y1="91" x2="158" y2="91" stroke="#bf360c" stroke-width="3"/>
+            <rect x="88" y="82" width="28" height="18" rx="9" fill="rgba(0,0,0,0.35)"/>
+            <rect x="158" y="82" width="28" height="18" rx="9" fill="rgba(0,0,0,0.35)"/>
+          </g>
+          <!-- Écharpe automne -->
+          <g class="acc-autumn" opacity="0">
+            <path d="M72 158 Q100 170 140 165 Q180 160 210 170 Q215 178 208 182 Q180 172 140 177 Q100 182 70 168 Z" fill="#bf360c"/>
+            <path d="M210 170 Q220 185 215 195 Q205 198 210 186 Q215 180 210 170 Z" fill="#e65100"/>
+          </g>
+          <!-- Bonnet hiver -->
+          <g class="acc-winter" opacity="0">
+            <ellipse cx="140" cy="56" rx="60" ry="28" fill="#1565c0"/>
+            <rect x="78" y="48" width="124" height="16" rx="8" fill="#1976d2"/>
+            <circle cx="140" cy="34" r="12" fill="#e3f2fd"/>
+            <ellipse cx="140" cy="56" rx="60" ry="12" fill="#1976d2" opacity=".5"/>
+          </g>
         </svg>
 
-        <!-- Ronds ripple sous la grenouille -->
+        <!-- Ripple rings -->
         <div class="ripple-ring"></div>
-        <div class="ripple-ring" style="animation-delay:1.2s"></div>
-        <div class="ripple-ring" style="animation-delay:2.4s"></div>
+        <div class="ripple-ring" style="animation-delay:.9s"></div>
+        <div class="ripple-ring" style="animation-delay:1.8s"></div>
+
+        <!-- GRENOUILLE CACHÉE #1 -->
+        <div class="hidden-frog" id="hf1" data-frog="1" title="🐸 Trouvé !" style="bottom:20px;right:10px">🐸</div>
       </div>
     </div>
 
-    <!-- Indicateur scroll -->
-    <a href="#concept" class="scroll-hint" aria-label="Défiler vers le bas">
-      <div class="scroll-dot-anim"></div>
+    <a href="#concept" class="scroll-hint" aria-label="Défiler">
+      <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
     </a>
   </section>
 
-  <!-- ========== BANDEAU SAISON ========== -->
+  <!-- ══════════ BANDEAU SAISON ══════════ -->
   <div class="season-ribbon" id="season-ribbon">
-    <div class="ribbon-inner">
-      <span class="ribbon-icon" id="ribbon-icon">🌸</span>
-      <span class="ribbon-text" id="ribbon-text">Collection Printemps — Les bonnes affaires fleurissent !</span>
-      <span class="ribbon-icon" id="ribbon-icon2">🌸</span>
+    <div class="ribbon-track" id="ribbon-track">
+      <span id="r-icon1">🌸</span>
+      <span id="r-text">Collection Printemps — Les bonnes affaires fleurissent !</span>
+      <span id="r-icon2">🌸</span>
+      <span>Egal A — La Baule</span>
+      <span>🐸</span>
+      <span>Des grandes marques, des petits prix</span>
+      <span id="r-icon3">🌸</span>
     </div>
   </div>
 
-  <!-- ========== CONCEPT ========== -->
-  <section class="section concept-section" id="concept">
+  <!-- ══════════ CONCEPT ══════════ -->
+  <section class="section concept-sec" id="concept">
     <div class="container">
       <div class="section-head" data-reveal>
         <span class="section-tag">Notre ADN</span>
@@ -195,226 +245,232 @@
       </div>
 
       <div class="concept-grid">
-        <div class="concept-card" data-reveal data-delay="0">
-          <div class="card-bubble">
-            <span class="card-emoji">🏷️</span>
-          </div>
+        <div class="concept-card" data-reveal>
+          <div class="card-icon-wrap"><span class="card-icon">🏷️</span></div>
           <h3>Grandes Marques</h3>
           <p>Des enseignes que vous reconnaissez et aimez — à des prix que vous n'attendiez pas.</p>
+          <!-- Grenouille cachée #2 -->
+          <div class="hidden-frog" id="hf2" data-frog="2" title="🐸 Trouvé !" style="bottom:12px;right:14px;font-size:1rem">🐸</div>
         </div>
 
-        <div class="concept-card concept-card--hero" data-reveal data-delay="100">
-          <div class="concept-frog-mini">
-            <svg viewBox="0 0 80 80" width="80" height="80">
-              <circle cx="40" cy="40" r="38" fill="var(--color-primary)"/>
-              <circle cx="27" cy="30" r="13" fill="var(--color-primary-light)"/>
-              <circle cx="53" cy="30" r="13" fill="var(--color-primary-light)"/>
-              <circle cx="27" cy="30" r="10" fill="white"/>
-              <circle cx="53" cy="30" r="10" fill="white"/>
-              <circle cx="29" cy="31" r="6" fill="#0f1f0f"/>
-              <circle cx="55" cy="31" r="6" fill="#0f1f0f"/>
-              <circle cx="31.5" cy="28.5" r="2" fill="white"/>
-              <circle cx="57.5" cy="28.5" r="2" fill="white"/>
-              <path d="M 24 54 Q 40 64 56 54" stroke="#0f1f0f" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-            </svg>
-          </div>
+        <div class="concept-card concept-hero-card" data-reveal data-delay="100">
+          <svg viewBox="0 0 80 80" width="72" height="72" class="concept-frog-mini">
+            <circle cx="40" cy="40" r="38" fill="var(--color-primary)"/>
+            <circle cx="27" cy="30" r="13" fill="var(--color-primary-light)"/>
+            <circle cx="53" cy="30" r="13" fill="var(--color-primary-light)"/>
+            <circle cx="27" cy="30" r="10" fill="white"/>
+            <circle cx="53" cy="30" r="10" fill="white"/>
+            <circle cx="29" cy="31" r="6"  fill="#0f1f0f"/>
+            <circle cx="55" cy="31" r="6"  fill="#0f1f0f"/>
+            <circle cx="31.5" cy="28.5" r="2" fill="white"/>
+            <circle cx="57.5" cy="28.5" r="2" fill="white"/>
+            <path d="M24 54 Q40 64 56 54" stroke="#0f1f0f" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          </svg>
           <h3>Notre Philosophie</h3>
-          <p>Egal A — l'égalité des bonnes affaires. Parce que tout le monde mérite le meilleur.</p>
-          <div class="hero-card-label">Notre identité</div>
+          <p>Egal A — l'égalité des bonnes affaires.<br>Tout le monde mérite le meilleur.</p>
+          <div class="hero-badge">Notre identité</div>
         </div>
 
         <div class="concept-card" data-reveal data-delay="200">
-          <div class="card-bubble">
-            <span class="card-emoji">🔄</span>
-          </div>
+          <div class="card-icon-wrap"><span class="card-icon">🔄</span></div>
           <h3>Renouveau Constant</h3>
-          <p>Notre stock se renouvelle chaque semaine. Revenez souvent pour ne rien manquer !</p>
+          <p>Notre stock se renouvelle chaque semaine. Revenez souvent pour ne rien manquer&nbsp;!</p>
         </div>
       </div>
 
-      <!-- Stats rapides -->
-      <div class="stats-row" data-reveal>
-        <div class="stat-item">
-          <span class="stat-number">-70%</span>
-          <span class="stat-label">jusqu'à</span>
+      <div class="stats-bar" data-reveal>
+        <div class="stat">
+          <span class="stat-n">-70%</span>
+          <span class="stat-l">jusqu'à</span>
         </div>
-        <div class="stat-sep">🐸</div>
-        <div class="stat-item">
-          <span class="stat-number">+50</span>
-          <span class="stat-label">marques</span>
+        <div class="stat-divider">🐸</div>
+        <div class="stat">
+          <span class="stat-n">Chaque&nbsp;semaine</span>
+          <span class="stat-l">nouveautés</span>
         </div>
-        <div class="stat-sep">🐸</div>
-        <div class="stat-item">
-          <span class="stat-number">7j/7</span>
-          <span class="stat-label">nouveautés</span>
+        <div class="stat-divider">🐸</div>
+        <div class="stat">
+          <span class="stat-n">100%</span>
+          <span class="stat-l">bonne humeur garantie</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== MARQUES ========== -->
-  <section class="section marques-section" id="marques">
+  <!-- ══════════ DÉSTOCKAGE ══════════ -->
+  <section class="section promo-sec" id="promo">
     <div class="container">
       <div class="section-head" data-reveal>
         <span class="section-tag">Déstockage</span>
-        <h2 class="section-title">Nos <span class="accent">Marques</span></h2>
-        <p class="section-sub">Des enseignes reconnues à prix déstockage, renouvelées chaque semaine</p>
+        <h2 class="section-title">Des prix <span class="accent">cassés</span></h2>
+        <p class="section-sub">Grandes enseignes à prix déstockage, renouvelées chaque semaine</p>
       </div>
-    </div>
 
-    <!-- Ticker défilant -->
-    <div class="ticker-wrap">
-      <div class="ticker-track" id="ticker">
-        <span class="ticker-brand">Tommy Hilfiger</span>
-        <span class="ticker-frog">🐸</span>
-        <span class="ticker-brand">Calvin Klein</span>
-        <span class="ticker-frog">🐸</span>
-        <span class="ticker-brand">Lacoste</span>
-        <span class="ticker-frog">🐸</span>
-        <span class="ticker-brand">Ralph Lauren</span>
-        <span class="ticker-frog">🐸</span>
-        <span class="ticker-brand">Nike</span>
-        <span class="ticker-frog">🐸</span>
-        <span class="ticker-brand">Adidas</span>
-        <span class="ticker-frog">🐸</span>
-        <span class="ticker-brand">Levi's</span>
-        <span class="ticker-frog">🐸</span>
-        <span class="ticker-brand">Hugo Boss</span>
-        <span class="ticker-frog">🐸</span>
-        <span class="ticker-brand">Guess</span>
-        <span class="ticker-frog">🐸</span>
-        <span class="ticker-brand">Puma</span>
-        <span class="ticker-frog">🐸</span>
-        <!-- Duplicate pour boucle infinie -->
-        <span class="ticker-brand">Tommy Hilfiger</span>
-        <span class="ticker-frog">🐸</span>
-        <span class="ticker-brand">Calvin Klein</span>
-        <span class="ticker-frog">🐸</span>
-        <span class="ticker-brand">Lacoste</span>
-        <span class="ticker-frog">🐸</span>
-        <span class="ticker-brand">Ralph Lauren</span>
-        <span class="ticker-frog">🐸</span>
-        <span class="ticker-brand">Nike</span>
-        <span class="ticker-frog">🐸</span>
-        <span class="ticker-brand">Adidas</span>
-        <span class="ticker-frog">🐸</span>
-        <span class="ticker-brand">Levi's</span>
-        <span class="ticker-frog">🐸</span>
-        <span class="ticker-brand">Hugo Boss</span>
-        <span class="ticker-frog">🐸</span>
-        <span class="ticker-brand">Guess</span>
-        <span class="ticker-frog">🐸</span>
-        <span class="ticker-brand">Puma</span>
-        <span class="ticker-frog">🐸</span>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="promo-banner" data-reveal>
-        <div class="promo-content">
-          <div class="promo-nums">
-            <span class="promo-big">-30%</span>
-            <span class="promo-sep">à</span>
-            <span class="promo-big promo-big--accent">-70%</span>
-          </div>
-          <p class="promo-label">sur les prix de boutique d'origine</p>
+      <!-- Ticker générique sans noms de marques -->
+      <div class="ticker-wrap">
+        <div class="ticker-track">
+          <span class="t-item">Grandes marques</span><span class="t-frog">🐸</span>
+          <span class="t-item">Petits prix</span><span class="t-frog">🐸</span>
+          <span class="t-item">Déstockage</span><span class="t-frog">🐸</span>
+          <span class="t-item">Chaque semaine</span><span class="t-frog">🐸</span>
+          <span class="t-item">La Baule</span><span class="t-frog">🐸</span>
+          <span class="t-item">Nouveautés</span><span class="t-frog">🐸</span>
+          <span class="t-item">Mode femme</span><span class="t-frog">🐸</span>
+          <span class="t-item">Mode homme</span><span class="t-frog">🐸</span>
+          <span class="t-item">Accessoires</span><span class="t-frog">🐸</span>
+          <!-- Doublon pour boucle infinie -->
+          <span class="t-item">Grandes marques</span><span class="t-frog">🐸</span>
+          <span class="t-item">Petits prix</span><span class="t-frog">🐸</span>
+          <span class="t-item">Déstockage</span><span class="t-frog">🐸</span>
+          <span class="t-item">Chaque semaine</span><span class="t-frog">🐸</span>
+          <span class="t-item">La Baule</span><span class="t-frog">🐸</span>
+          <span class="t-item">Nouveautés</span><span class="t-frog">🐸</span>
+          <span class="t-item">Mode femme</span><span class="t-frog">🐸</span>
+          <span class="t-item">Mode homme</span><span class="t-frog">🐸</span>
+          <span class="t-item">Accessoires</span><span class="t-frog">🐸</span>
         </div>
-        <div class="promo-frog-wrap">
-          <svg viewBox="0 0 100 100" width="90" height="90" class="promo-frog">
-            <ellipse cx="50" cy="75" rx="42" ry="22" fill="var(--color-primary)" opacity="0.9"/>
-            <ellipse cx="50" cy="60" rx="38" ry="32" fill="var(--color-primary)"/>
-            <circle cx="33" cy="44" r="14" fill="var(--color-primary-light)"/>
-            <circle cx="67" cy="44" r="14" fill="var(--color-primary-light)"/>
-            <circle cx="33" cy="44" r="11" fill="white"/>
-            <circle cx="67" cy="44" r="11" fill="white"/>
-            <circle cx="35" cy="45" r="7" fill="#0f1f0f"/>
-            <circle cx="69" cy="45" r="7" fill="#0f1f0f"/>
-            <circle cx="37.5" cy="42.5" r="2.5" fill="white"/>
-            <circle cx="71.5" cy="42.5" r="2.5" fill="white"/>
-            <path d="M 33 75 Q 50 86 67 75" stroke="#0f1f0f" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </div>
+
+      <!-- Carte promo -->
+      <div class="promo-card" data-reveal>
+        <div class="promo-nums">
+          <span class="promo-n1">-30%</span>
+          <span class="promo-sep">à</span>
+          <span class="promo-n2">-70%</span>
+        </div>
+        <p class="promo-sub">sur les prix de boutique d'origine</p>
+        <div class="promo-frog-decor">
+          <!-- Grenouille cachée #3 -->
+          <div class="hidden-frog" id="hf3" data-frog="3" title="🐸 Trouvé !" style="position:absolute;bottom:10px;left:10px">🐸</div>
+          <svg viewBox="0 0 100 100" width="90" height="90" class="promo-mascot">
+            <ellipse cx="50" cy="75" rx="42" ry="22" fill="var(--color-primary)" opacity=".9"/>
+            <ellipse cx="50" cy="62" rx="38" ry="30" fill="var(--color-primary)"/>
+            <circle cx="33" cy="46" r="14" fill="var(--frog-light, var(--color-primary-light))"/>
+            <circle cx="67" cy="46" r="14" fill="var(--frog-light, var(--color-primary-light))"/>
+            <circle cx="33" cy="46" r="11" fill="white"/>
+            <circle cx="67" cy="46" r="11" fill="white"/>
+            <circle cx="35" cy="47" r="7"  fill="#0f1f0f"/>
+            <circle cx="69" cy="47" r="7"  fill="#0f1f0f"/>
+            <circle cx="37.5" cy="44.5" r="2.5" fill="white"/>
+            <circle cx="71.5" cy="44.5" r="2.5" fill="white"/>
+            <path d="M33 75 Q50 86 67 75" stroke="#0f1f0f" stroke-width="2.5" fill="none" stroke-linecap="round"/>
           </svg>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== BOUTIQUE ========== -->
-  <section class="section boutique-section" id="boutique">
+  <!-- ══════════ PHOTOS BOUTIQUE ══════════ -->
+  <section class="section photos-sec" id="photos">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="section-tag">Notre Boutique</span>
+        <h2 class="section-title">La Boutique <span class="accent">en Images</span></h2>
+        <p class="section-sub">Retrouvez Egal A au 146 Av. du Général de Gaulle, La Baule-Escoublac</p>
+      </div>
+
+      <div class="photos-grid" data-reveal>
+        <div class="photo-card photo-main">
+          <div class="photo-inner">
+            <div class="photo-frog-bg">🐸</div>
+            <p>Photos de la boutique</p>
+          </div>
+        </div>
+        <div class="photo-card">
+          <div class="photo-inner">
+            <div class="photo-frog-bg" style="font-size:3rem">👗</div>
+            <p>Nos rayons</p>
+          </div>
+        </div>
+        <div class="photo-card">
+          <div class="photo-inner">
+            <div class="photo-frog-bg" style="font-size:3rem">🏷️</div>
+            <p>Nos prix</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="photos-cta" data-reveal data-delay="200">
+        <p class="photos-cta-text">Envie de voir nos dernières arrivées ?</p>
+        <a href="https://share.google/bw73zsScUmeq7yuMA"
+           target="_blank" rel="noopener noreferrer"
+           class="btn btn-primary photos-btn">
+          📸 &nbsp;Voir les photos de la boutique
+          <svg viewBox="0 0 20 20" width="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 10h10M11 6l4 4-4 4"/></svg>
+        </a>
+        <p class="photos-cta-hint">Album Google Photos — mis à jour régulièrement</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ BOUTIQUE / INFOS ══════════ -->
+  <section class="section boutique-sec" id="boutique">
     <div class="container">
       <div class="section-head" data-reveal>
         <span class="section-tag">Nous trouver</span>
-        <h2 class="section-title">La <span class="accent">Boutique</span></h2>
-        <p class="section-sub">Venez nous rendre visite au cœur de La Baule</p>
+        <h2 class="section-title">Infos <span class="accent">Pratiques</span></h2>
       </div>
 
       <div class="boutique-grid">
-        <div class="boutique-infos" data-reveal>
-          <div class="info-card">
-            <div class="info-icon-wrap">
-              <span class="info-icon">📍</span>
-            </div>
-            <div>
+        <div class="infos-col" data-reveal>
+
+          <div class="info-block">
+            <div class="info-icon">📍</div>
+            <div class="info-body">
               <h3>Adresse</h3>
-              <p>La Baule<br>Loire-Atlantique — 44500</p>
+              <p>146 Av. du Général de Gaulle<br>44500 La Baule-Escoublac</p>
             </div>
           </div>
 
-          <div class="info-card">
-            <div class="info-icon-wrap">
-              <span class="info-icon">🕐</span>
+          <div class="info-block">
+            <div class="info-icon">📞</div>
+            <div class="info-body">
+              <h3>Téléphone</h3>
+              <p><a href="tel:+33970922377" class="tel-link">09 70 92 23 77</a></p>
             </div>
-            <div>
-              <h3>Horaires d'ouverture</h3>
+          </div>
+
+          <div class="info-block">
+            <div class="info-icon">🕐</div>
+            <div class="info-body">
+              <h3>Horaires</h3>
               <p>
-                Lundi — Samedi&nbsp;&nbsp;<strong>10h – 19h</strong><br>
-                Dimanche&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Fermé</em>
+                Lundi – Samedi &nbsp;<strong>10h – 19h</strong><br>
+                Dimanche &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Fermé</em>
               </p>
             </div>
           </div>
 
-          <div class="info-card">
-            <div class="info-icon-wrap">
-              <span class="info-icon">📞</span>
-            </div>
-            <div>
-              <h3>Contact</h3>
-              <p>Passez nous voir en boutique !<br>Nous serons ravis de vous accueillir.</p>
-            </div>
-          </div>
-
-          <div class="info-card info-card--season" id="info-card-season">
-            <div class="info-icon-wrap">
-              <span class="info-icon" id="boutique-season-icon">🌸</span>
-            </div>
-            <div>
-              <h3 id="boutique-season-title">Collection Printemps</h3>
-              <p id="boutique-season-text">Nouvelles arrivées de saison disponibles en boutique !</p>
+          <div class="info-block info-block--season" id="info-season">
+            <div class="info-icon" id="info-season-icon">🌸</div>
+            <div class="info-body">
+              <h3 id="info-season-title">Collection Printemps</h3>
+              <p id="info-season-text">Nouvelles arrivées printanières dès maintenant !</p>
             </div>
           </div>
         </div>
 
-        <div class="boutique-map" data-reveal data-delay="150">
+        <div class="map-col" data-reveal data-delay="150">
+          <!-- Grenouille cachée #4 -->
+          <div class="hidden-frog" id="hf4" data-frog="4" title="🐸 Trouvé !" style="position:absolute;top:10px;right:10px;z-index:5">🐸</div>
           <div class="map-card">
             <div class="map-visual">
-              <div class="map-lines">
-                <div class="map-line map-line-h" style="top:30%"></div>
-                <div class="map-line map-line-h" style="top:55%"></div>
-                <div class="map-line map-line-h" style="top:75%"></div>
-                <div class="map-line map-line-v" style="left:25%"></div>
-                <div class="map-line map-line-v" style="left:55%"></div>
-                <div class="map-line map-line-v" style="left:78%"></div>
-              </div>
-              <div class="map-pin-wrap">
-                <div class="map-pin-pulse"></div>
-                <div class="map-pin">🐸</div>
-                <div class="map-label">Egal A</div>
+              <div class="map-grid-line" style="top:25%"></div>
+              <div class="map-grid-line" style="top:55%"></div>
+              <div class="map-grid-line" style="top:78%"></div>
+              <div class="map-grid-line map-grid-v" style="left:22%"></div>
+              <div class="map-grid-line map-grid-v" style="left:55%"></div>
+              <div class="map-grid-line map-grid-v" style="left:80%"></div>
+              <div class="map-center">
+                <div class="map-pulse"></div>
+                <div class="map-pin-icon">🐸</div>
+                <div class="map-pin-label">Egal A</div>
               </div>
             </div>
-            <a href="https://maps.google.com/?q=La+Baule+Loire-Atlantique+44500" target="_blank" rel="noopener noreferrer" class="map-cta">
-              Voir sur Google Maps
-              <svg viewBox="0 0 20 20" width="14" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="M5 10h10M11 6l4 4-4 4"/>
-              </svg>
+            <a href="https://maps.google.com/?q=146+Avenue+du+General+de+Gaulle+44500+La+Baule-Escoublac"
+               target="_blank" rel="noopener noreferrer" class="map-link">
+              Ouvrir dans Google Maps
+              <svg viewBox="0 0 20 20" width="13" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 10h10M11 6l4 4-4 4"/></svg>
             </a>
           </div>
         </div>
@@ -422,107 +478,106 @@
     </div>
   </section>
 
-  <!-- ========== CONTACT ========== -->
-  <section class="section contact-section" id="contact">
+  <!-- ══════════ CONTACT / CTA ══════════ -->
+  <section class="section contact-sec" id="contact">
     <div class="container">
       <div class="contact-inner" data-reveal>
-        <div class="contact-frog">
-          <svg viewBox="0 0 120 120" width="110" height="110" class="contact-frog-svg">
-            <ellipse cx="60" cy="110" rx="48" ry="10" fill="rgba(0,0,0,0.1)"/>
-            <ellipse cx="60" cy="82" rx="46" ry="38" fill="var(--color-primary)"/>
-            <ellipse cx="60" cy="92" rx="30" ry="24" fill="var(--color-primary-light)" opacity="0.5"/>
-            <ellipse cx="60" cy="60" rx="42" ry="40" fill="var(--color-primary)"/>
-            <circle cx="40" cy="44" r="17" fill="var(--color-primary-light)"/>
-            <circle cx="80" cy="44" r="17" fill="var(--color-primary-light)"/>
-            <circle cx="40" cy="44" r="14" fill="white"/>
-            <circle cx="80" cy="44" r="14" fill="white"/>
-            <circle cx="42" cy="45" r="8.5" fill="#0f1f0f"/>
-            <circle cx="82" cy="45" r="8.5" fill="#0f1f0f"/>
-            <circle cx="45" cy="42" r="3" fill="white"/>
-            <circle cx="85" cy="42" r="3" fill="white"/>
-            <path d="M 42 76 Q 60 88 78 76" stroke="#0f1f0f" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <circle cx="36" cy="65" r="9" fill="#ff9eb5" opacity="0.25"/>
-            <circle cx="84" cy="65" r="9" fill="#ff9eb5" opacity="0.25"/>
-          </svg>
-        </div>
+        <svg viewBox="0 0 130 130" width="110" class="contact-frog-svg">
+          <ellipse cx="65" cy="120" rx="50" ry="10" fill="rgba(0,0,0,0.13)"/>
+          <ellipse cx="65" cy="88" rx="48" ry="38" fill="var(--frog-body)"/>
+          <ellipse cx="65" cy="99" rx="30" ry="22" fill="var(--frog-belly)" opacity=".5"/>
+          <ellipse cx="65" cy="62" rx="44" ry="42" fill="var(--frog-body)"/>
+          <circle cx="43" cy="46" r="18" fill="var(--frog-light)"/>
+          <circle cx="87" cy="46" r="18" fill="var(--frog-light)"/>
+          <circle cx="43" cy="46" r="14" fill="white"/>
+          <circle cx="87" cy="46" r="14" fill="white"/>
+          <circle cx="45" cy="47" r="9"  fill="#0f1f0f"/>
+          <circle cx="89" cy="47" r="9"  fill="#0f1f0f"/>
+          <circle cx="48" cy="44" r="3"  fill="white"/>
+          <circle cx="92" cy="44" r="3"  fill="white"/>
+          <path d="M43 80 Q65 92 87 80" stroke="#0f1f0f" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="36" cy="68" r="9" fill="#ff9eb5" opacity=".25"/>
+          <circle cx="94" cy="68" r="9" fill="#ff9eb5" opacity=".25"/>
+        </svg>
         <div class="contact-text">
-          <h2>On se retrouve<br><span class="accent">à La Baule ?</span></h2>
-          <p>Rendez-vous en boutique pour découvrir toutes nos arrivées. Notre équipe vous accueille avec le sourire… et des bonnes affaires !</p>
-          <a href="#boutique" class="btn btn-primary">Voir les horaires</a>
+          <h2>On se retrouve <span class="accent-white">à La Baule&nbsp;?</span></h2>
+          <p>Notre équipe vous accueille avec le sourire — et des bonnes affaires qui vous attendent.</p>
+          <div class="contact-btns">
+            <a href="tel:+33970922377" class="btn btn-white">📞 &nbsp;09 70 92 23 77</a>
+            <a href="#boutique" class="btn btn-outline-white">Voir les horaires</a>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== FOOTER ========== -->
-  <footer class="footer" id="footer">
-    <div class="footer-top">
+  <!-- ══════════ FOOTER ══════════ -->
+  <footer class="footer">
+    <div class="footer-main">
       <div class="footer-brand">
         <div class="footer-logo">
-          <svg viewBox="0 0 50 50" width="40" height="40" aria-hidden="true">
-            <ellipse cx="25" cy="32" rx="18" ry="15" fill="currentColor" opacity="0.9"/>
+          <svg viewBox="0 0 50 50" width="36" height="36" aria-hidden="true">
+            <ellipse cx="25" cy="33" rx="18" ry="14" fill="currentColor" opacity=".9"/>
             <ellipse cx="25" cy="27" rx="16" ry="14" fill="currentColor"/>
-            <circle cx="17" cy="20" r="7" fill="currentColor" opacity="0.7"/>
-            <circle cx="33" cy="20" r="7" fill="currentColor" opacity="0.7"/>
-            <circle cx="17" cy="20" r="5.5" fill="white" opacity="0.9"/>
-            <circle cx="33" cy="20" r="5.5" fill="white" opacity="0.9"/>
+            <circle cx="17" cy="20" r="7"   fill="currentColor" opacity=".7"/>
+            <circle cx="33" cy="20" r="7"   fill="currentColor" opacity=".7"/>
+            <circle cx="17" cy="20" r="5.5" fill="white" opacity=".9"/>
+            <circle cx="33" cy="20" r="5.5" fill="white" opacity=".9"/>
             <circle cx="18" cy="21" r="3.5" fill="#1a1a1a"/>
             <circle cx="34" cy="21" r="3.5" fill="#1a1a1a"/>
-            <circle cx="19.5" cy="19.5" r="1.2" fill="white"/>
-            <circle cx="35.5" cy="19.5" r="1.2" fill="white"/>
-            <path d="M 17 34 Q 25 40 33 34" stroke="#1a1a1a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <circle cx="19.5" cy="19.5" r="1.3" fill="white"/>
+            <circle cx="35.5" cy="19.5" r="1.3" fill="white"/>
+            <path d="M17 34 Q25 40 33 34" stroke="#1a1a1a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
           </svg>
-          <span class="footer-logo-name">Egal<span>A</span></span>
+          <span class="footer-logo-name">Egal <span>A</span></span>
         </div>
         <p class="footer-slogan">Des grandes marques, des petits prix</p>
-        <p class="footer-city">📍 La Baule, Loire-Atlantique</p>
+        <p class="footer-addr">📍 146 Av. du Général de Gaulle<br>44500 La Baule-Escoublac</p>
+        <p class="footer-tel">📞 <a href="tel:+33970922377">09 70 92 23 77</a></p>
       </div>
 
       <nav class="footer-nav" aria-label="Navigation footer">
         <h4>Navigation</h4>
         <ul>
           <li><a href="#concept">Le Concept</a></li>
-          <li><a href="#marques">Nos Marques</a></li>
-          <li><a href="#boutique">La Boutique</a></li>
+          <li><a href="#promo">Déstockage</a></li>
+          <li><a href="#photos">La Boutique</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
 
       <div class="footer-social">
         <h4>Suivez-nous</h4>
-        <div class="social-icons">
+        <div class="social-row">
           <a href="#" class="social-btn" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-            </svg>
+            <svg viewBox="0 0 24 24" width="18" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
           </a>
           <a href="#" class="social-btn" aria-label="Facebook">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-            </svg>
+            <svg viewBox="0 0 24 24" width="18" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
           </a>
           <a href="#" class="social-btn" aria-label="TikTok">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-              <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
-            </svg>
+            <svg viewBox="0 0 24 24" width="18" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
           </a>
         </div>
-        <p class="footer-social-text">Suivez nos arrivées en direct !</p>
+        <p class="social-hint">Suivez nos arrivées !</p>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <p>© <span id="year"></span> Egal A — La Baule. Tous droits réservés.</p>
-      <p class="footer-made">Fait avec 🐸 à La Baule</p>
+      <p>© <span id="footer-year"></span> Egal A — La Baule. Tous droits réservés.</p>
+      <p>Fait avec 🐸 à La Baule</p>
     </div>
+
+    <!-- Grenouille cachée #5 -->
+    <div class="hidden-frog" id="hf5" data-frog="5" title="🐸 Trouvé !" style="position:absolute;bottom:14px;right:120px;font-size:.9rem">🐸</div>
   </footer>
 
-  <!-- ========== SWITCHER SAISON (coin) ========== -->
-  <div class="season-switcher" id="season-switcher" title="Prévisualiser les saisons">
-    <button class="ss-btn" data-season="spring" title="Printemps">🌸</button>
-    <button class="ss-btn" data-season="summer" title="Été">☀️</button>
-    <button class="ss-btn" data-season="autumn" title="Automne">🍂</button>
-    <button class="ss-btn" data-season="winter" title="Hiver">❄️</button>
+  <!-- ══════════ SWITCHER SAISON ══════════ -->
+  <div class="season-switcher" id="season-switcher" title="Changer de saison">
+    <button class="ss-btn active" data-season="spring"  title="Printemps">🌸</button>
+    <button class="ss-btn"        data-season="summer"  title="Été">☀️</button>
+    <button class="ss-btn"        data-season="autumn"  title="Automne">🍂</button>
+    <button class="ss-btn"        data-season="winter"  title="Hiver">❄️</button>
   </div>
 
   <script src="script.js"></script>

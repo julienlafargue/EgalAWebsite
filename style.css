@@ -1,9 +1,10 @@
 /* ==============================================
-   EGAL A — FEUILLE DE STYLE PRINCIPALE
-   Système de thèmes saisonniers + univers grenouille
+   EGAL A — CSS PRINCIPAL
+   4 thèmes saisonniers très distincts
+   + univers grenouille / jeu interactif
    ============================================== */
 
-/* ── Reset & base ── */
+/* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; }
 body {
@@ -11,1246 +12,940 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   overflow-x: hidden;
-  transition:
-    background var(--t-season),
-    color var(--t-season);
+  transition: background var(--t-season), color var(--t-season);
 }
 img, svg { display: block; max-width: 100%; }
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 
-/* ── Variables globales ── */
+/* ── Typographie & variables globales ── */
 :root {
   --font-display: 'Playfair Display', Georgia, serif;
-  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
   --container: 1200px;
-  --t-season: 0.8s cubic-bezier(.4,0,.2,1);
-  --t-fast: 0.2s ease;
-  --t-med: 0.4s ease;
+  --t-season: 0.9s cubic-bezier(.4,0,.2,1);
+  --t-fast: 0.18s ease;
+  --t-med: 0.35s ease;
   --radius: 20px;
   --radius-sm: 10px;
   --radius-pill: 50px;
-  --shadow: 0 4px 24px rgba(0,0,0,0.07);
-  --shadow-md: 0 8px 40px rgba(0,0,0,0.1);
-  --shadow-lg: 0 20px 60px rgba(0,0,0,0.14);
+  --shadow-sm: 0 2px 12px rgba(0,0,0,.07);
+  --shadow: 0 6px 30px rgba(0,0,0,.1);
+  --shadow-lg: 0 18px 60px rgba(0,0,0,.15);
 }
 
-/* ==============================================
-   THÈMES SAISONNIERS
-   ============================================== */
+/* ================================================
+   THÈMES SAISONNIERS — très distincts
+   ================================================ */
 
-/* ── Printemps ── */
+/* ────────────────────────────────────
+   🌸 PRINTEMPS — jardin en fleurs
+   Pinks + greens frais, aérien, doux
+   ──────────────────────────────────── */
 [data-season="spring"] {
-  --color-primary:       #2d9e4f;
-  --color-primary-dark:  #1b6e34;
-  --color-primary-light: #81c784;
-  --color-accent:        #fce4ec;
+  --color-primary:       #2e7d32;
+  --color-primary-dark:  #1b5e20;
+  --color-primary-light: #a5d6a7;
   --color-accent-solid:  #f48fb1;
-  --color-accent2:       #fff59d;
-  --color-bg:            #f2f8f3;
+  --color-accent2:       #fff9c4;
+  --color-bg:            #f9fdf9;
   --color-bg2:           #e8f5e9;
   --color-surface:       #ffffff;
-  --color-text:          #1b4d2a;
-  --color-text-muted:    #4a7a57;
-  --color-border:        rgba(45,158,79,0.18);
-  --color-water:         rgba(100,200,130,0.22);
-  --hero-grad:           linear-gradient(150deg, #c8e6c9 0%, #a5d6a7 50%, #81c784 100%);
-  --section-alt-bg:      #e8f5e9;
+  --color-text:          #1a2e1c;
+  --color-text-muted:    #4a6e4d;
+  --color-border:        rgba(46,125,50,.15);
+  --hero-grad: linear-gradient(155deg, #fce4ec 0%, #f8bbd0 18%, #c8e6c9 45%, #a5d6a7 70%, #66bb6a 100%);
+  --section-even-bg:     #e8f5e9;
   --tag-bg:              #c8e6c9;
   --tag-color:           #1b5e20;
-  --season-emoji:        "🌸";
-  --season-nm:           "Printemps";
-  --season-quote:        "Les bonnes affaires fleurissent !";
-  --ribbon-bg:           linear-gradient(90deg, #a5d6a7, #c8e6c9, #a5d6a7);
-  --lily-fill:           #388e3c;
-  --lily-stroke:         #2e7d32;
+  --ribbon-grad: linear-gradient(90deg,#c8e6c9,#f8bbd0,#c8e6c9);
+  --stat-bar-bg: linear-gradient(135deg,#2e7d32,#43a047);
+  --promo-bg:            #e8f5e9;
+  --contact-bg: linear-gradient(135deg,#1b5e20 0%,#2e7d32 50%,#43a047 100%);
+  --frog-body:  #43a047;
+  --frog-dark:  #2e7d32;
+  --frog-light: #a5d6a7;
+  --frog-belly: #c8e6c9;
+  --footer-bg:           #1a2e1c;
+  --season-emoji: "🌸"; --season-nm: "Printemps";
+  --season-quote: "Les bonnes affaires fleurissent !";
+  --particle-emoji: "🌸";
 }
-
-/* ── Été ── */
+/* ────────────────────────────────────
+   ☀️ ÉTÉ — plage de La Baule
+   Bleu océan profond + sable chaud
+   Très contrasté, vibrant, beach-vibes
+   ──────────────────────────────────── */
 [data-season="summer"] {
-  --color-primary:       #00838f;
-  --color-primary-dark:  #006064;
-  --color-primary-light: #4dd0e1;
-  --color-accent:        #fff8e1;
+  --color-primary:       #0277bd;
+  --color-primary-dark:  #01579b;
+  --color-primary-light: #4fc3f7;
   --color-accent-solid:  #ffd54f;
   --color-accent2:       #ff8a65;
-  --color-bg:            #e0f7fa;
-  --color-bg2:           #b2ebf2;
+  --color-bg:            #e1f5fe;
+  --color-bg2:           #b3e5fc;
   --color-surface:       #ffffff;
-  --color-text:          #004d56;
-  --color-text-muted:    #00838f;
-  --color-border:        rgba(0,131,143,0.18);
-  --color-water:         rgba(0,188,212,0.2);
-  --hero-grad:           linear-gradient(150deg, #b2ebf2 0%, #80deea 50%, #4dd0e1 100%);
-  --section-alt-bg:      #b2ebf2;
-  --tag-bg:              #b2ebf2;
-  --tag-color:           #004d56;
-  --season-emoji:        "☀️";
-  --season-nm:           "Été";
-  --season-quote:        "Soleil de La Baule, prix au frais !";
-  --ribbon-bg:           linear-gradient(90deg, #80deea, #b2ebf2, #80deea);
-  --lily-fill:           #00897b;
-  --lily-stroke:         #00695c;
+  --color-text:          #012a40;
+  --color-text-muted:    #0277bd;
+  --color-border:        rgba(2,119,189,.18);
+  --hero-grad: linear-gradient(170deg, #01579b 0%, #0288d1 30%, #29b6f6 58%, #c8e6b0 80%, #e6c87a 100%);
+  --section-even-bg:     #b3e5fc;
+  --tag-bg:              #b3e5fc;
+  --tag-color:           #01579b;
+  --ribbon-grad: linear-gradient(90deg,#29b6f6,#ffd54f,#29b6f6);
+  --stat-bar-bg: linear-gradient(135deg,#0277bd,#0288d1);
+  --promo-bg:            #e1f5fe;
+  --contact-bg: linear-gradient(135deg,#01579b 0%,#0277bd 50%,#0288d1 100%);
+  --frog-body:  #0277bd;
+  --frog-dark:  #01579b;
+  --frog-light: #81d4fa;
+  --frog-belly: #b3e5fc;
+  --footer-bg:           #012a40;
+  --season-emoji: "☀️"; --season-nm: "Été";
+  --season-quote: "Soleil de La Baule, prix au frais !";
+  --particle-emoji: "☀️";
 }
-
-/* ── Automne ── */
+/* ────────────────────────────────────
+   🍂 AUTOMNE — chaleureux & sombre
+   Oranges brûlés, bruns, ambrés
+   Très sombre, ambiance cosy boutique
+   ──────────────────────────────────── */
 [data-season="autumn"] {
-  --color-primary:       #e65100;
+  --color-primary:       #d84315;
   --color-primary-dark:  #bf360c;
-  --color-primary-light: #ff8a50;
-  --color-accent:        #fff3e0;
+  --color-primary-light: #ff8a65;
   --color-accent-solid:  #ffd54f;
   --color-accent2:       #a5d6a7;
   --color-bg:            #fff8f2;
   --color-bg2:           #ffe0b2;
-  --color-surface:       #ffffff;
-  --color-text:          #3e2723;
-  --color-text-muted:    #6d4c41;
-  --color-border:        rgba(230,81,0,0.18);
-  --color-water:         rgba(230,81,0,0.12);
-  --hero-grad:           linear-gradient(150deg, #ffe0b2 0%, #ffcc80 50%, #ffb74d 100%);
-  --section-alt-bg:      #ffe0b2;
-  --tag-bg:              #ffe0b2;
-  --tag-color:           #3e2723;
-  --season-emoji:        "🍂";
-  --season-nm:           "Automne";
-  --season-quote:        "Les feuilles tombent, les prix aussi !";
-  --ribbon-bg:           linear-gradient(90deg, #ffcc80, #ffe0b2, #ffcc80);
-  --lily-fill:           #d84315;
-  --lily-stroke:         #bf360c;
+  --color-surface:       #fffaf5;
+  --color-text:          #2c1007;
+  --color-text-muted:    #6d3220;
+  --color-border:        rgba(216,67,21,.2);
+  --hero-grad: linear-gradient(155deg, #2c1007 0%, #6d2b00 25%, #bf360c 55%, #e64a19 75%, #ff8a65 100%);
+  --section-even-bg:     #ffe0b2;
+  --tag-bg:              #ffcc80;
+  --tag-color:           #3e1a00;
+  --ribbon-grad: linear-gradient(90deg,#e64a19,#ffcc80,#e64a19);
+  --stat-bar-bg: linear-gradient(135deg,#bf360c,#d84315);
+  --promo-bg:            #fff3e0;
+  --contact-bg: linear-gradient(135deg,#2c1007 0%,#6d2b00 50%,#bf360c 100%);
+  --frog-body:  #bf360c;
+  --frog-dark:  #8d2408;
+  --frog-light: #ff8a65;
+  --frog-belly: #ffccbc;
+  --footer-bg:           #1a0a02;
+  --season-emoji: "🍂"; --season-nm: "Automne";
+  --season-quote: "Les feuilles tombent, les prix aussi !";
+  --particle-emoji: "🍂";
 }
-
-/* ── Hiver ── */
+/* ────────────────────────────────────
+   ❄️ HIVER — glacé & nocturne
+   Marine très sombre + bleu glacé
+   Épuré, froid, contrasté
+   ──────────────────────────────────── */
 [data-season="winter"] {
   --color-primary:       #1565c0;
   --color-primary-dark:  #0d47a1;
-  --color-primary-light: #64b5f6;
-  --color-accent:        #e3f2fd;
-  --color-accent-solid:  #90caf9;
+  --color-primary-light: #82b1ff;
+  --color-accent-solid:  #b3e5fc;
   --color-accent2:       #ce93d8;
-  --color-bg:            #e8f0f9;
-  --color-bg2:           #bbdefb;
+  --color-bg:            #ecf3fb;
+  --color-bg2:           #c5d8f0;
   --color-surface:       #ffffff;
-  --color-text:          #0d2137;
-  --color-text-muted:    #1e5799;
-  --color-border:        rgba(21,101,192,0.18);
-  --color-water:         rgba(21,101,192,0.15);
-  --hero-grad:           linear-gradient(150deg, #bbdefb 0%, #90caf9 50%, #64b5f6 100%);
-  --section-alt-bg:      #bbdefb;
+  --color-text:          #050f1e;
+  --color-text-muted:    #1a3a6e;
+  --color-border:        rgba(21,101,192,.18);
+  --hero-grad: linear-gradient(155deg, #040c1a 0%, #0a2240 25%, #0d47a1 55%, #1976d2 78%, #90caf9 100%);
+  --section-even-bg:     #c5d8f0;
   --tag-bg:              #bbdefb;
   --tag-color:           #0d2137;
-  --season-emoji:        "❄️";
-  --season-nm:           "Hiver";
-  --season-quote:        "Le froid des températures, pas des prix !";
-  --ribbon-bg:           linear-gradient(90deg, #90caf9, #bbdefb, #90caf9);
-  --lily-fill:           #1976d2;
-  --lily-stroke:         #1565c0;
+  --ribbon-grad: linear-gradient(90deg,#1565c0,#90caf9,#1565c0);
+  --stat-bar-bg: linear-gradient(135deg,#0d47a1,#1565c0);
+  --promo-bg:            #e3f2fd;
+  --contact-bg: linear-gradient(135deg,#040c1a 0%,#0a2240 50%,#1565c0 100%);
+  --frog-body:  #1565c0;
+  --frog-dark:  #0d47a1;
+  --frog-light: #90caf9;
+  --frog-belly: #bbdefb;
+  --footer-bg:           #050f1e;
+  --season-emoji: "❄️"; --season-nm: "Hiver";
+  --season-quote: "Le froid des températures, pas des prix !";
+  --particle-emoji: "❄️";
 }
 
-/* ==============================================
-   OVERLAY DE TRANSITION SAISONNIÈRE
-   ============================================== */
-.season-transition-overlay {
-  position: fixed;
-  inset: 0;
+/* ================================================
+   OVERLAY TRANSITION SAISON
+   ================================================ */
+.season-overlay {
+  position: fixed; inset: 0;
   background: var(--color-primary);
   z-index: 9999;
-  opacity: 0;
+  opacity: 0; pointer-events: none;
+  transition: opacity .4s ease;
+}
+.season-overlay.flash { opacity: .5; }
+
+/* ================================================
+   PARTICULES SAISONNIÈRES
+   ================================================ */
+.particles-layer {
+  position: fixed; inset: 0;
   pointer-events: none;
-  transition: opacity 0.4s ease;
+  z-index: 10;
+  overflow: hidden;
 }
-.season-transition-overlay.flash {
-  opacity: 0.35;
+.particle {
+  position: absolute;
+  top: -60px;
+  user-select: none;
+  pointer-events: none;
+  animation: particle-fall linear infinite;
+  will-change: transform;
 }
-
-/* ==============================================
-   UTILITAIRES
-   ============================================== */
-.container {
-  max-width: var(--container);
-  margin-inline: auto;
-  padding-inline: 1.5rem;
-}
-
-.section {
-  padding: 6rem 0;
-  transition: background var(--t-season);
+@keyframes particle-fall {
+  0%   { transform: translateY(-60px) translateX(0) rotate(0deg);   opacity: 0; }
+  5%   { opacity: 1; }
+  92%  { opacity: .7; }
+  100% { transform: translateY(105vh)  translateX(var(--drift, 30px)) rotate(var(--spin, 360deg)); opacity: 0; }
 }
 
-.section:nth-child(even) {
-  background: var(--section-alt-bg);
-}
-
-.accent {
+/* ================================================
+   COMPTEUR DE GRENOUILLES
+   ================================================ */
+.frog-counter {
+  position: fixed;
+  top: 80px; right: 1.25rem;
+  z-index: 250;
+  background: var(--color-surface);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-pill);
+  padding: .45rem .9rem;
+  display: flex; align-items: center; gap: .4rem;
+  font-size: .88rem; font-weight: 700;
   color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+  transition:
+    border-color var(--t-season),
+    color var(--t-season),
+    transform .25s cubic-bezier(.34,1.56,.64,1),
+    background var(--t-season);
+  cursor: default;
+}
+.frog-counter.bump { transform: scale(1.25); }
+.frog-counter-emoji { font-size: 1.1rem; }
+.frog-counter-total { opacity: .5; font-weight: 400; }
+
+/* ================================================
+   GRENOUILLES CACHÉES
+   ================================================ */
+.hidden-frog {
+  position: absolute;
+  font-size: 1.4rem;
+  cursor: pointer;
+  user-select: none;
+  z-index: 20;
+  animation: wiggle-frog 2.5s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.2));
+  transition: transform .2s cubic-bezier(.34,1.56,.64,1), opacity .3s;
+}
+.hidden-frog:hover { transform: scale(1.4) rotate(10deg) !important; animation: none; }
+.hidden-frog.found {
+  animation: frog-escape .5s ease-in forwards !important;
+  pointer-events: none;
+}
+@keyframes wiggle-frog {
+  0%,100% { transform: rotate(-8deg) scale(1); }
+  50%      { transform: rotate(8deg) scale(1.1); }
+}
+@keyframes frog-escape {
+  0%   { transform: scale(1) translateY(0); opacity: 1; }
+  40%  { transform: scale(1.6) translateY(-30px); }
+  100% { transform: scale(0)   translateY(-60px); opacity: 0; }
+}
+
+/* Mini grenouille pop (spawn par JS) */
+.mini-frog-pop {
+  position: fixed;
+  font-size: 1.5rem;
+  pointer-events: none;
+  z-index: 500;
+  animation: mini-frog-fly .8s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+@keyframes mini-frog-fly {
+  0%   { transform: translate(0,0)   scale(0) rotate(0deg); opacity: 1; }
+  60%  { opacity: 1; }
+  100% { transform: translate(var(--tx),var(--ty)) scale(1.2) rotate(var(--tr, 30deg)); opacity: 0; }
+}
+
+/* Bulle de parole */
+.speech-bubble {
+  position: absolute;
+  top: -12px; right: -10px;
+  background: white;
+  border: 2px solid var(--color-primary);
+  border-radius: 12px 12px 12px 0;
+  padding: .5rem 1rem;
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+  opacity: 0;
+  transform: scale(.7) translateY(8px);
+  transition:
+    opacity .3s ease,
+    transform .3s cubic-bezier(.34,1.56,.64,1),
+    border-color var(--t-season),
+    color var(--t-season);
+  pointer-events: none;
+  z-index: 30;
+}
+.speech-bubble.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Achievement popup */
+.achievement-popup {
+  position: fixed;
+  inset: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,.55);
+  opacity: 0; pointer-events: none;
+  transition: opacity .4s ease;
+}
+.achievement-popup.show { opacity: 1; pointer-events: all; }
+.achievement-inner {
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  padding: 3rem 3.5rem;
+  text-align: center;
+  max-width: 420px; width: 90%;
+  box-shadow: var(--shadow-lg);
+  transform: scale(.85);
+  transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+}
+.achievement-popup.show .achievement-inner { transform: scale(1); }
+.achievement-frogs { font-size: 2rem; margin-bottom: 1rem; letter-spacing: .2rem; }
+.achievement-inner h3 {
+  font-family: var(--font-display);
+  font-size: 1.6rem; font-weight: 900;
+  color: var(--color-primary); margin-bottom: .75rem;
   transition: color var(--t-season);
 }
+.achievement-inner p { color: var(--color-text-muted); line-height: 1.6; margin-bottom: 1.5rem; }
+.achievement-btn { margin-inline: auto; }
 
+/* ================================================
+   UTILITAIRES
+   ================================================ */
+.container { max-width: var(--container); margin-inline: auto; padding-inline: 1.5rem; }
+.section { padding: 6rem 0; transition: background var(--t-season); }
+.section:nth-child(even) { background: var(--section-even-bg); }
+.accent { color: var(--color-primary); transition: color var(--t-season); }
+
+/* Boutons */
 .btn {
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  padding: .75rem 1.75rem;
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .8rem 1.8rem;
   border-radius: var(--radius-pill);
-  font-family: var(--font-body);
-  font-size: .95rem;
-  font-weight: 600;
-  letter-spacing: .02em;
-  cursor: pointer;
-  border: none;
+  font-family: var(--font-body); font-size: .95rem; font-weight: 600;
+  cursor: pointer; border: none;
   transition: transform var(--t-fast), box-shadow var(--t-fast), background var(--t-season), color var(--t-season);
 }
-.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.btn:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
 .btn:active { transform: translateY(0); }
-
-.btn-primary {
-  background: var(--color-primary);
-  color: white;
-}
+.btn-primary { background: var(--color-primary); color: white; }
 .btn-primary:hover { background: var(--color-primary-dark); }
+.btn-ghost { background: transparent; color: var(--color-primary); border: 2px solid var(--color-primary); }
+.btn-ghost:hover { background: var(--color-primary); color: white; }
+.btn-white { background: white; color: var(--color-primary); }
+.btn-white:hover { background: var(--color-bg); }
+.btn-outline-white { background: transparent; color: white; border: 2px solid rgba(255,255,255,.7); }
+.btn-outline-white:hover { background: rgba(255,255,255,.15); }
 
-.btn-ghost {
-  background: transparent;
-  color: var(--color-primary);
-  border: 2px solid var(--color-primary);
-}
-.btn-ghost:hover {
-  background: var(--color-primary);
-  color: white;
-}
-
-/* Data-reveal — animations au scroll */
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity .7s ease, transform .7s ease;
-}
-[data-reveal].revealed {
-  opacity: 1;
-  transform: none;
-}
+/* Reveal au scroll */
+[data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+[data-reveal].revealed { opacity: 1; transform: none; }
 [data-reveal][data-delay="100"] { transition-delay: .1s; }
 [data-reveal][data-delay="150"] { transition-delay: .15s; }
 [data-reveal][data-delay="200"] { transition-delay: .2s; }
-[data-reveal][data-delay="300"] { transition-delay: .3s; }
 
-/* ==============================================
+/* ================================================
    NAVBAR
-   ============================================== */
+   ================================================ */
 .navbar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 200;
-  padding: 1.2rem 0;
-  transition:
-    padding var(--t-fast),
-    background var(--t-fast),
-    box-shadow var(--t-fast),
-    color var(--t-season);
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  padding: 1.1rem 0;
+  transition: padding var(--t-fast), background var(--t-fast), box-shadow var(--t-fast);
 }
-.navbar.scrolled {
-  padding: .7rem 0;
-  background: var(--color-surface);
-  box-shadow: var(--shadow);
-}
-
+.navbar.scrolled { padding: .65rem 0; background: var(--color-surface); box-shadow: var(--shadow-sm); }
 .nav-container {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  max-width: var(--container);
-  margin-inline: auto;
-  padding-inline: 1.5rem;
+  display: flex; align-items: center; gap: 1.5rem;
+  max-width: var(--container); margin-inline: auto; padding-inline: 1.5rem;
 }
-
-.nav-logo {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  flex-shrink: 0;
-}
-.nav-frog-svg {
-  width: 42px;
-  height: 42px;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.15));
+.nav-logo { display: flex; align-items: center; gap: .55rem; }
+.nav-frog {
+  width: 40px; height: 40px;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,.15));
   transition: transform .3s cubic-bezier(.34,1.56,.64,1);
 }
-.nav-logo:hover .nav-frog-svg { transform: scale(1.12) rotate(-5deg); }
-.nav-logo-text {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 900;
-  color: var(--color-text);
-  letter-spacing: -.02em;
+.nav-logo:hover .nav-frog { transform: scale(1.15) rotate(-8deg); }
+.nav-logo-name {
+  font-family: var(--font-display); font-size: 1.55rem; font-weight: 900;
+  color: var(--color-text); letter-spacing: -.02em;
   transition: color var(--t-season);
 }
-.nav-logo-accent {
-  color: var(--color-primary);
-  transition: color var(--t-season);
-}
-
-.nav-links {
-  display: flex;
-  gap: .25rem;
-  margin-left: auto;
-}
+.nav-logo-accent { color: var(--color-primary); transition: color var(--t-season); }
+.nav-links { display: flex; gap: .2rem; margin-left: auto; }
 .nav-link {
-  padding: .5rem .9rem;
-  border-radius: var(--radius-pill);
-  font-size: .9rem;
-  font-weight: 500;
+  padding: .5rem .85rem; border-radius: var(--radius-pill);
+  font-size: .88rem; font-weight: 500;
   color: var(--color-text);
   transition: background var(--t-fast), color var(--t-fast);
 }
-.nav-link:hover {
-  background: var(--color-bg2);
-  color: var(--color-primary);
-}
-
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: .75rem;
-  flex-shrink: 0;
-}
-
+.nav-link:hover { background: var(--color-bg2); color: var(--color-primary); }
+.nav-right { display: flex; align-items: center; gap: .7rem; flex-shrink: 0; }
 .season-badge {
-  display: flex;
-  align-items: center;
-  gap: .4rem;
-  padding: .4rem .9rem;
+  display: flex; align-items: center; gap: .4rem;
+  padding: .38rem .85rem;
   border-radius: var(--radius-pill);
-  background: var(--color-bg2);
-  font-size: .82rem;
-  font-weight: 600;
-  color: var(--color-text);
-  cursor: default;
-  transition: background var(--t-season), color var(--t-season);
+  background: var(--color-bg2); font-size: .82rem; font-weight: 600;
+  color: var(--color-text); transition: background var(--t-season), color var(--t-season);
   user-select: none;
 }
-.season-badge-icon { font-size: 1rem; }
-
 .nav-burger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: .4rem;
+  display: none; flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: .4rem;
 }
 .nav-burger span {
-  display: block;
-  width: 24px; height: 2px;
-  background: var(--color-text);
-  border-radius: 2px;
+  display: block; width: 24px; height: 2px;
+  background: var(--color-text); border-radius: 2px;
   transition: background var(--t-season), transform var(--t-fast);
 }
 
-/* ==============================================
+/* ================================================
    HERO
-   ============================================== */
+   ================================================ */
 .hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  background: var(--hero-grad);
-  overflow: hidden;
+  min-height: 100vh; position: relative;
+  display: flex; flex-direction: column;
+  background: var(--hero-grad); overflow: hidden;
   transition: background var(--t-season);
 }
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.water-surface {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 30%;
-  background: var(--color-water);
+.hero-bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.water-base {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 35%;
+  background: rgba(255,255,255,.12);
+  clip-path: ellipse(130% 100% at 50% 100%);
   transition: background var(--t-season);
-  clip-path: ellipse(120% 100% at 50% 100%);
 }
-
-/* Lily pads (créés en JS) */
+/* Lily pads & bubbles (créés par JS) */
 .lily-pad {
-  position: absolute;
-  border-radius: 50%;
-  background: var(--lily-fill);
-  opacity: 0.7;
-  transition: background var(--t-season), opacity var(--t-season);
-  animation: float-lily var(--duration, 8s) var(--delay, 0s) ease-in-out infinite;
+  position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,.18);
+  border: 2px solid rgba(255,255,255,.3);
+  animation: lily-bob var(--dur,8s) var(--del,0s) ease-in-out infinite;
 }
-.lily-pad::before {
-  content: '';
-  position: absolute;
-  top: 15%; left: 20%;
-  width: 30%; height: 30%;
-  background: var(--lily-stroke);
-  border-radius: 50%;
-  opacity: .5;
-  transition: background var(--t-season);
+@keyframes lily-bob {
+  0%,100% { transform: translateY(0) rotate(var(--r0,0deg)) scale(1); }
+  50%      { transform: translateY(-14px) rotate(var(--r1,8deg)) scale(1.04); }
 }
-.lily-pad::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at 35% 35%, rgba(255,255,255,0.2) 0%, transparent 60%);
+.bubble-el {
+  position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,.5);
+  animation: bubble-rise var(--dur,6s) var(--del,0s) linear infinite;
 }
-
-@keyframes float-lily {
-  0%, 100% { transform: translateY(0) rotate(var(--rot-start, 0deg)) scale(1); }
-  50%       { transform: translateY(-12px) rotate(var(--rot-end, 8deg)) scale(1.03); }
-}
-
-/* Bulles (créées en JS) */
-.bubble {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.55);
-  animation: rise-bubble var(--duration, 6s) var(--delay, 0s) ease-in infinite;
-}
-@keyframes rise-bubble {
-  0%   { transform: translateY(0) scale(1);   opacity: .7; }
-  80%  { opacity: .4; }
-  100% { transform: translateY(-80px) scale(1.2); opacity: 0; }
+@keyframes bubble-rise {
+  0%   { transform: translateY(0) scale(1); opacity: .7; }
+  100% { transform: translateY(-90px) scale(1.3); opacity: 0; }
 }
 
 .hero-content {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-  max-width: var(--container);
-  margin-inline: auto;
-  padding: 8rem 1.5rem 4rem;
-  width: 100%;
-  position: relative;
-  z-index: 1;
+  flex: 1; display: flex; align-items: center; justify-content: space-between;
+  gap: 2rem; max-width: var(--container); margin-inline: auto;
+  padding: 9rem 1.5rem 4rem; width: 100%; position: relative; z-index: 1;
 }
-
-/* Texte hero */
-.hero-text { flex: 1; max-width: 540px; }
-
+.hero-text { flex: 1; max-width: 520px; }
 .hero-location {
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  font-size: .85rem;
-  font-weight: 600;
-  color: var(--color-primary-dark);
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  margin-bottom: 1.2rem;
-  transition: color var(--t-season);
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: rgba(255,255,255,.85); margin-bottom: 1.1rem;
 }
-.location-pulse {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--color-primary);
-  animation: pulse-dot 2s ease infinite;
-  flex-shrink: 0;
-  transition: background var(--t-season);
+.loc-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,255,255,.9);
+  animation: pulse-dot 2s ease infinite; flex-shrink: 0;
 }
 @keyframes pulse-dot {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50%       { transform: scale(1.5); opacity: .6; }
+  0%,100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.6); opacity: .5; }
 }
-
-.hero-title {
-  font-family: var(--font-display);
-  font-size: clamp(4rem, 10vw, 8rem);
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -.04em;
-  margin-bottom: .8rem;
+.hero-h1 {
+  font-family: var(--font-display); font-size: clamp(4.5rem,11vw,9rem);
+  font-weight: 900; line-height: 1; letter-spacing: -.04em; margin-bottom: .7rem;
 }
-.hero-title-egal {
-  color: var(--color-text);
-  transition: color var(--t-season);
-}
-.hero-title-a {
-  color: var(--color-primary);
-  transition: color var(--t-season);
-  font-style: italic;
-}
-
+.h1-egal { color: white; }
+.h1-a    { color: var(--color-accent-solid); transition: color var(--t-season); font-style: italic; }
 .hero-slogan {
-  font-family: var(--font-display);
-  font-size: clamp(1.2rem, 2.5vw, 1.7rem);
-  line-height: 1.4;
-  margin-bottom: 1.4rem;
-  color: var(--color-text);
-  transition: color var(--t-season);
+  font-family: var(--font-display); font-size: clamp(1.15rem,2.2vw,1.6rem);
+  color: white; line-height: 1.45; margin-bottom: 1.2rem;
 }
-.slogan-line1 {
-  display: block;
-  font-weight: 400;
-  font-style: italic;
-  opacity: .8;
+.hero-slogan em   { display: block; font-weight: 400; opacity: .8; }
+.hero-slogan strong { display: block; font-weight: 700; color: var(--color-accent-solid); transition: color var(--t-season); }
+.hero-sub {
+  font-size: .95rem; line-height: 1.7; color: rgba(255,255,255,.75);
+  max-width: 430px; margin-bottom: 2rem;
 }
-.slogan-line2 {
-  display: block;
-  font-weight: 700;
-  font-style: normal;
-  color: var(--color-primary);
-  transition: color var(--t-season);
-}
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
 
-.hero-desc {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: var(--color-text-muted);
-  max-width: 440px;
-  margin-bottom: 2rem;
-  transition: color var(--t-season);
+/* Zone grenouille */
+.hero-frog-zone {
+  flex-shrink: 0; position: relative;
+  display: flex; align-items: flex-end; justify-content: center;
+  width: min(340px,45vw);
 }
-
-.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-/* Grenouille hero */
-.hero-frog-wrap {
-  flex-shrink: 0;
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  width: min(340px, 45vw);
-}
-
-.frog-aura {
-  position: absolute;
-  width: 85%;
-  height: 85%;
+.frog-glow {
+  position: absolute; width: 80%; height: 80%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.35) 0%, transparent 70%);
-  animation: aura-pulse 4s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(255,255,255,.28) 0%, transparent 70%);
+  animation: glow-pulse 4s ease-in-out infinite;
 }
-@keyframes aura-pulse {
-  0%, 100% { transform: scale(1); opacity: .6; }
-  50%       { transform: scale(1.08); opacity: 1; }
+@keyframes glow-pulse {
+  0%,100% { transform: scale(1); opacity: .7; }
+  50%      { transform: scale(1.1); opacity: 1; }
 }
-
-.hero-frog {
-  width: 100%;
-  animation: frog-float 5s ease-in-out infinite;
-  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.15));
-  cursor: pointer;
+.main-frog {
+  width: 100%; cursor: pointer;
+  filter: drop-shadow(0 24px 48px rgba(0,0,0,.22));
+  animation: frog-float 5.5s ease-in-out infinite;
   transition: filter var(--t-season);
 }
 @keyframes frog-float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  30%       { transform: translateY(-18px) rotate(1.5deg); }
-  70%       { transform: translateY(-10px) rotate(-1deg); }
+  0%,100% { transform: translateY(0)    rotate(0deg); }
+  30%      { transform: translateY(-20px) rotate(1.5deg); }
+  70%      { transform: translateY(-10px) rotate(-1deg); }
 }
-.hero-frog:hover {
-  animation: frog-jump .5s cubic-bezier(.34,1.56,.64,1) forwards;
+.main-frog.click-jump {
+  animation: frog-click-jump .55s cubic-bezier(.34,1.56,.64,1) forwards;
 }
-@keyframes frog-jump {
-  0%   { transform: translateY(0) scale(1); }
-  40%  { transform: translateY(-40px) scale(1.05); }
-  70%  { transform: translateY(-28px) scale(1.02); }
-  100% { transform: translateY(-18px) scale(1); animation-play-state: paused; }
+@keyframes frog-click-jump {
+  0%   { transform: translateY(0)    scale(1)    rotate(0deg); }
+  35%  { transform: translateY(-55px) scale(1.08) rotate(8deg); }
+  70%  { transform: translateY(-35px) scale(1.04) rotate(-3deg); }
+  100% { transform: translateY(-20px) scale(1)    rotate(0deg); }
 }
+/* Clin d'œil */
+.main-frog.winking .pupil-normal { opacity: 0; }
+.main-frog.winking .eye-wink     { opacity: 1; }
 
 .ripple-ring {
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
+  position: absolute; bottom: -8px; left: 50%;
   transform: translateX(-50%);
-  width: 120px; height: 30px;
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.45);
-  animation: ripple-expand 3s ease-out infinite;
+  width: 100px; height: 26px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.4);
+  animation: ripple-out 3s ease-out infinite;
 }
-@keyframes ripple-expand {
-  0%   { width: 80px; opacity: .8; }
-  100% { width: 200px; opacity: 0; }
+@keyframes ripple-out {
+  0%   { width: 70px; opacity: .8; }
+  100% { width: 220px; opacity: 0; }
 }
 
 /* Scroll hint */
 .scroll-hint {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
+  position: absolute; bottom: 2.2rem; left: 50%;
+  transform: translateX(-50%); z-index: 1;
 }
-.scroll-dot-anim {
-  width: 28px; height: 46px;
-  border: 2px solid rgba(255,255,255,0.6);
-  border-radius: 14px;
-  position: relative;
+.scroll-mouse {
+  width: 26px; height: 42px; border-radius: 13px;
+  border: 2px solid rgba(255,255,255,.6);
+  position: relative; display: flex; justify-content: center;
 }
-.scroll-dot-anim::before {
-  content: '';
-  position: absolute;
-  top: 6px; left: 50%;
-  transform: translateX(-50%);
-  width: 5px; height: 5px;
-  background: rgba(255,255,255,0.9);
-  border-radius: 50%;
-  animation: scroll-bounce 2s ease infinite;
+.scroll-wheel {
+  width: 4px; height: 8px; border-radius: 2px;
+  background: rgba(255,255,255,.9); margin-top: 7px;
+  animation: wheel-drop 2s ease infinite;
 }
-@keyframes scroll-bounce {
-  0%   { top: 6px; opacity: 1; }
-  70%  { top: 24px; opacity: .3; }
-  100% { top: 6px; opacity: 1; }
+@keyframes wheel-drop {
+  0%   { transform: translateY(0);   opacity: 1; }
+  70%  { transform: translateY(16px); opacity: .2; }
+  100% { transform: translateY(0);   opacity: 1; }
 }
 
-/* ==============================================
-   BANDEAU SAISONNIER
-   ============================================== */
+/* Ripple clic hero */
+.hero-click-ripple {
+  position: absolute; border-radius: 50%;
+  border: 3px solid rgba(255,255,255,.7);
+  pointer-events: none; z-index: 5;
+  animation: click-ripple .7s ease-out forwards;
+}
+@keyframes click-ripple {
+  0%   { width: 0; height: 0; opacity: 1; transform: translate(-50%,-50%) scale(0); }
+  100% { width: 140px; height: 140px; opacity: 0; transform: translate(-50%,-50%) scale(1); }
+}
+
+/* ================================================
+   BANDEAU SAISON
+   ================================================ */
 .season-ribbon {
-  background: var(--ribbon-bg);
-  padding: .7rem 0;
-  overflow: hidden;
+  background: var(--ribbon-grad); padding: .65rem 0; overflow: hidden;
   transition: background var(--t-season);
 }
-.ribbon-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  font-size: .9rem;
-  font-weight: 600;
-  color: var(--color-text);
-  transition: color var(--t-season);
+.ribbon-track {
+  display: flex; align-items: center; gap: 2rem;
+  width: max-content;
+  animation: ribbon-scroll 22s linear infinite;
+  font-size: .88rem; font-weight: 600;
+  color: var(--color-text); transition: color var(--t-season);
   white-space: nowrap;
-  animation: ribbon-slide 20s linear infinite;
 }
-@keyframes ribbon-slide {
-  0%   { transform: translateX(10%); }
-  100% { transform: translateX(-10%); }
+@keyframes ribbon-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-/* ==============================================
+/* ================================================
    SECTION HEADERS
-   ============================================== */
-.section-head { text-align: center; margin-bottom: 4rem; }
-
+   ================================================ */
+.section-head { text-align: center; margin-bottom: 3.5rem; }
 .section-tag {
   display: inline-block;
-  padding: .35rem 1rem;
-  border-radius: var(--radius-pill);
-  background: var(--tag-bg);
-  color: var(--tag-color);
-  font-size: .78rem;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-  transition: background var(--t-season), color var(--t-season);
+  padding: .32rem 1rem; border-radius: var(--radius-pill);
+  background: var(--tag-bg); color: var(--tag-color);
+  font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  margin-bottom: .9rem; transition: background var(--t-season), color var(--t-season);
 }
-
 .section-title {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 900;
-  color: var(--color-text);
-  letter-spacing: -.03em;
-  line-height: 1.1;
-  margin-bottom: .75rem;
-  transition: color var(--t-season);
+  font-family: var(--font-display); font-size: clamp(2rem,4vw,3rem);
+  font-weight: 900; color: var(--color-text); letter-spacing: -.03em;
+  line-height: 1.1; margin-bottom: .65rem; transition: color var(--t-season);
 }
-
 .section-sub {
-  font-size: 1.05rem;
-  color: var(--color-text-muted);
-  max-width: 520px;
-  margin-inline: auto;
-  line-height: 1.6;
-  transition: color var(--t-season);
+  font-size: 1rem; color: var(--color-text-muted); max-width: 500px;
+  margin-inline: auto; line-height: 1.65; transition: color var(--t-season);
 }
 
-/* ==============================================
+/* ================================================
    CONCEPT
-   ============================================== */
+   ================================================ */
 .concept-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 4rem;
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-bottom: 3rem;
 }
-
 .concept-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  padding: 2.5rem 2rem;
-  text-align: center;
-  transition:
-    transform var(--t-fast),
-    box-shadow var(--t-fast),
-    background var(--t-season),
-    border-color var(--t-season);
-  position: relative;
-  overflow: hidden;
+  position: relative; overflow: hidden;
+  background: var(--color-surface); border: 1.5px solid var(--color-border);
+  border-radius: var(--radius); padding: 2.2rem 1.8rem; text-align: center;
+  transition: transform var(--t-fast), box-shadow var(--t-fast), background var(--t-season), border-color var(--t-season);
 }
-.concept-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: var(--color-primary);
-  transform: scaleX(0);
-  transform-origin: left;
+.concept-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; background: var(--color-primary);
+  transform: scaleX(0); transform-origin: left;
   transition: transform var(--t-med), background var(--t-season);
-  border-radius: var(--radius) var(--radius) 0 0;
 }
-.concept-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-md);
+.concept-card:hover { transform: translateY(-7px); box-shadow: var(--shadow); }
+.concept-card:hover::after { transform: scaleX(1); }
+.card-icon-wrap {
+  width: 68px; height: 68px; border-radius: 50%;
+  background: var(--color-bg2); display: flex; align-items: center;
+  justify-content: center; margin: 0 auto 1.4rem;
+  font-size: 1.7rem; transition: background var(--t-season);
 }
-.concept-card:hover::before { transform: scaleX(1); }
-
-.card-bubble {
-  width: 72px; height: 72px;
-  border-radius: 50%;
-  background: var(--color-bg2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.5rem;
-  font-size: 1.8rem;
-  transition: background var(--t-season);
-}
-
 .concept-card h3 {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--color-text);
-  margin-bottom: .75rem;
-  transition: color var(--t-season);
+  font-family: var(--font-display); font-size: 1.2rem; font-weight: 700;
+  color: var(--color-text); margin-bottom: .65rem; transition: color var(--t-season);
 }
 .concept-card p {
-  font-size: .95rem;
-  color: var(--color-text-muted);
-  line-height: 1.7;
+  font-size: .93rem; color: var(--color-text-muted); line-height: 1.65;
   transition: color var(--t-season);
 }
-
-.concept-card--hero {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-  color: white;
+.concept-hero-card {
+  background: var(--color-primary); border-color: var(--color-primary);
+  transition: background var(--t-season), border-color var(--t-season);
 }
-.concept-card--hero::before { background: rgba(255,255,255,0.4); }
-.concept-card--hero h3,
-.concept-card--hero p { color: white; }
-.concept-frog-mini { margin: 0 auto 1.25rem; }
-
-.hero-card-label {
-  display: inline-block;
-  margin-top: 1rem;
-  padding: .3rem .9rem;
-  border-radius: var(--radius-pill);
-  background: rgba(255,255,255,0.25);
-  font-size: .78rem;
-  font-weight: 700;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  color: white;
+.concept-hero-card h3,
+.concept-hero-card p { color: white; }
+.concept-frog-mini { margin: 0 auto 1.2rem; }
+.hero-badge {
+  display: inline-block; margin-top: .9rem;
+  padding: .28rem .8rem; border-radius: var(--radius-pill);
+  background: rgba(255,255,255,.25); font-size: .74rem; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase; color: white;
 }
 
 /* Stats */
-.stats-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 3rem;
-  padding: 2.5rem;
-  background: var(--color-primary);
-  border-radius: var(--radius);
+.stats-bar {
+  display: flex; align-items: center; justify-content: center;
+  gap: 3rem; padding: 2.5rem;
+  background: var(--stat-bar-bg); border-radius: var(--radius);
   transition: background var(--t-season);
 }
-.stat-item { text-align: center; }
-.stat-number {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 2.4rem;
-  font-weight: 900;
-  color: white;
-  line-height: 1;
-}
-.stat-label {
-  font-size: .85rem;
-  font-weight: 600;
-  color: rgba(255,255,255,.75);
-  letter-spacing: .06em;
-  text-transform: uppercase;
-}
-.stat-sep { font-size: 1.5rem; }
+.stat { text-align: center; }
+.stat-n { display: block; font-family: var(--font-display); font-size: 2.2rem; font-weight: 900; color: white; line-height: 1; }
+.stat-l { font-size: .78rem; font-weight: 600; color: rgba(255,255,255,.7); letter-spacing: .07em; text-transform: uppercase; }
+.stat-divider { font-size: 1.4rem; }
 
-/* ==============================================
-   MARQUES / TICKER
-   ============================================== */
-.marques-section { background: var(--color-bg); overflow: hidden; }
-
+/* ================================================
+   DÉSTOCKAGE
+   ================================================ */
 .ticker-wrap {
-  overflow: hidden;
-  padding: 2rem 0;
-  margin: 2rem 0;
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
+  overflow: hidden; padding: 1.8rem 0; margin: 2rem 0;
+  border-top: 1.5px solid var(--color-border);
+  border-bottom: 1.5px solid var(--color-border);
   transition: border-color var(--t-season);
 }
 .ticker-track {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
+  display: flex; align-items: center; gap: 2rem;
   width: max-content;
-  animation: ticker-roll 25s linear infinite;
+  animation: ticker-roll 20s linear infinite;
 }
 .ticker-track:hover { animation-play-state: paused; }
 @keyframes ticker-roll {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-.ticker-brand {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-text-muted);
-  white-space: nowrap;
-  transition: color var(--t-season);
+.t-item {
+  font-family: var(--font-display); font-size: 1.4rem; font-weight: 700;
+  color: var(--color-text-muted); white-space: nowrap;
+  transition: color var(--t-season); cursor: default;
+}
+.t-item:hover { color: var(--color-primary); }
+.t-frog { font-size: 1.2rem; opacity: .55; }
+
+.promo-card {
+  display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+  background: var(--promo-bg); border: 2px solid var(--color-primary);
+  border-radius: var(--radius); padding: 2.5rem 3rem; position: relative;
+  overflow: hidden; transition: background var(--t-season), border-color var(--t-season);
+}
+.promo-nums { display: flex; align-items: baseline; gap: 1rem; }
+.promo-n1,.promo-n2 {
+  font-family: var(--font-display); font-size: 3.5rem; font-weight: 900;
+  color: var(--color-primary); line-height: 1; transition: color var(--t-season);
+}
+.promo-n2 { color: var(--color-primary-dark); }
+.promo-sep { font-size: 1.3rem; color: var(--color-text-muted); font-weight: 300; }
+.promo-sub { font-size: .95rem; color: var(--color-text-muted); margin-top: .4rem; transition: color var(--t-season); }
+.promo-frog-decor { position: relative; }
+.promo-mascot { animation: frog-float 4s ease-in-out infinite; }
+
+/* ================================================
+   PHOTOS
+   ================================================ */
+.photos-sec { background: var(--color-bg); }
+.photos-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem; margin-bottom: 2.5rem;
+}
+.photo-card { border-radius: var(--radius); overflow: hidden; min-height: 220px; }
+.photo-main { min-height: 280px; }
+.photo-inner {
+  height: 100%; min-height: inherit;
+  background: var(--color-bg2);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: .75rem;
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius);
+  transition: background var(--t-season), border-color var(--t-season);
   cursor: default;
 }
-.ticker-brand:hover { color: var(--color-primary); }
-.ticker-frog { font-size: 1.3rem; opacity: .6; }
+.photo-frog-bg { font-size: 4rem; opacity: .4; }
+.photo-inner p { font-size: .85rem; color: var(--color-text-muted); font-weight: 500; transition: color var(--t-season); }
+.photos-cta { text-align: center; }
+.photos-cta-text { font-size: 1.05rem; color: var(--color-text-muted); margin-bottom: 1rem; transition: color var(--t-season); }
+.photos-btn { font-size: 1rem; padding: 1rem 2.2rem; }
+.photos-cta-hint { font-size: .8rem; color: var(--color-text-muted); margin-top: .75rem; opacity: .7; }
 
-/* Bannière promo */
-.promo-banner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-  background: var(--color-bg2);
-  border: 2px solid var(--color-primary);
-  border-radius: var(--radius);
-  padding: 2rem 3rem;
-  transition: background var(--t-season), border-color var(--t-season);
+/* ================================================
+   BOUTIQUE / INFOS
+   ================================================ */
+.boutique-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+.infos-col { display: flex; flex-direction: column; gap: .9rem; }
+.info-block {
+  display: flex; align-items: flex-start; gap: 1.1rem;
+  background: var(--color-surface); border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm); padding: 1.4rem;
+  transition: transform var(--t-fast), background var(--t-season), border-color var(--t-season);
 }
-.promo-content { flex: 1; }
-.promo-nums {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  margin-bottom: .5rem;
+.info-block:hover { transform: translateX(5px); box-shadow: var(--shadow-sm); }
+.info-block--season { background: var(--color-bg2); border-color: var(--color-primary); }
+.info-icon { font-size: 1.4rem; flex-shrink: 0; }
+.info-block h3 {
+  font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em;
+  color: var(--color-primary); margin-bottom: .4rem; transition: color var(--t-season);
 }
-.promo-big {
-  font-family: var(--font-display);
-  font-size: 3rem;
-  font-weight: 900;
-  color: var(--color-primary);
-  line-height: 1;
-  transition: color var(--t-season);
-}
-.promo-big--accent { color: var(--color-primary-dark); }
-.promo-sep {
-  font-size: 1.4rem;
-  font-weight: 300;
-  color: var(--color-text-muted);
-  transition: color var(--t-season);
-}
-.promo-label {
-  font-size: 1rem;
-  color: var(--color-text-muted);
-  font-weight: 500;
-  transition: color var(--t-season);
-}
-.promo-frog-wrap .promo-frog {
-  animation: frog-float 4s ease-in-out infinite;
-}
+.info-block p { font-size: .93rem; color: var(--color-text-muted); line-height: 1.6; transition: color var(--t-season); }
+.info-block strong { color: var(--color-text); font-weight: 600; }
+.info-block em { color: var(--color-text-muted); font-style: normal; }
+.tel-link { color: var(--color-primary); font-weight: 600; transition: color var(--t-season); }
+.tel-link:hover { text-decoration: underline; }
 
-/* ==============================================
-   BOUTIQUE
-   ============================================== */
-.boutique-section { background: var(--color-bg); }
-
-.boutique-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2.5rem;
-  align-items: start;
-}
-
-.boutique-infos { display: flex; flex-direction: column; gap: 1rem; }
-
-.info-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.25rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  padding: 1.5rem;
-  transition:
-    transform var(--t-fast),
-    box-shadow var(--t-fast),
-    background var(--t-season),
-    border-color var(--t-season);
-}
-.info-card:hover {
-  transform: translateX(4px);
-  box-shadow: var(--shadow);
-}
-.info-card--season {
-  background: var(--color-bg2);
-  border-color: var(--color-primary);
-  transition: background var(--t-season), border-color var(--t-season);
-}
-
-.info-icon-wrap {
-  width: 44px; height: 44px;
-  flex-shrink: 0;
-  background: var(--color-bg2);
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
-  transition: background var(--t-season);
-}
-.info-card h3 {
-  font-size: .9rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .06em;
-  color: var(--color-primary);
-  margin-bottom: .4rem;
-  transition: color var(--t-season);
-}
-.info-card p {
-  font-size: .95rem;
-  color: var(--color-text-muted);
-  line-height: 1.6;
-  transition: color var(--t-season);
-}
-.info-card strong { color: var(--color-text); font-weight: 600; }
-.info-card em { color: var(--color-text-muted); font-style: normal; }
-
-/* Carte map */
+.map-col { position: relative; }
 .map-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow);
+  background: var(--color-surface); border: 1.5px solid var(--color-border);
+  border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
   transition: background var(--t-season), border-color var(--t-season);
 }
-.map-visual {
-  position: relative;
-  height: 280px;
-  background: var(--color-bg2);
-  overflow: hidden;
-  transition: background var(--t-season);
-}
-
-/* Grille pseudo-carte */
-.map-line {
-  position: absolute;
-  background: var(--color-border);
-  transition: background var(--t-season);
-}
-.map-line-h { left: 0; right: 0; height: 1px; }
-.map-line-v { top: 0; bottom: 0; width: 1px; }
-
-.map-pin-wrap {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -60%);
-  text-align: center;
-}
-.map-pin-pulse {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50px; height: 50px;
-  border-radius: 50%;
-  background: var(--color-primary);
-  opacity: .2;
-  animation: map-pulse 2.5s ease-in-out infinite;
-  transition: background var(--t-season);
+.map-visual { position: relative; height: 260px; background: var(--color-bg2); overflow: hidden; transition: background var(--t-season); }
+.map-grid-line { position: absolute; background: var(--color-border); transition: background var(--t-season); }
+.map-grid-line:not(.map-grid-v) { left:0; right:0; height:1px; }
+.map-grid-v { top:0; bottom:0; width:1px; }
+.map-center { position: absolute; top:50%; left:50%; transform:translate(-50%,-60%); text-align:center; }
+.map-pulse {
+  position: absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:48px; height:48px; border-radius:50%;
+  background: var(--color-primary); opacity:.2;
+  animation: map-pulse 2.5s ease infinite; transition: background var(--t-season);
 }
 @keyframes map-pulse {
-  0%, 100% { transform: translate(-50%,-50%) scale(1); opacity: .2; }
-  50%       { transform: translate(-50%,-50%) scale(1.8); opacity: .05; }
+  0%,100% { transform:translate(-50%,-50%) scale(1); opacity:.2; }
+  50%      { transform:translate(-50%,-50%) scale(2); opacity:.05; }
 }
-.map-pin { font-size: 2.5rem; animation: pin-bounce 3s ease-in-out infinite; }
-@keyframes pin-bounce {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-8px); }
+.map-pin-icon { font-size:2.4rem; animation:pin-bob 3s ease-in-out infinite; }
+@keyframes pin-bob {
+  0%,100% { transform:translateY(0); }
+  50%      { transform:translateY(-8px); }
 }
-.map-label {
-  font-size: .82rem;
-  font-weight: 700;
-  color: var(--color-primary);
-  margin-top: .4rem;
-  background: white;
-  padding: .3rem .7rem;
-  border-radius: var(--radius-pill);
-  box-shadow: var(--shadow);
-  white-space: nowrap;
-  transition: color var(--t-season);
+.map-pin-label {
+  font-size:.8rem; font-weight:700; color:var(--color-primary);
+  margin-top:.35rem; background:white; padding:.3rem .7rem;
+  border-radius:var(--radius-pill); box-shadow:var(--shadow-sm);
+  white-space:nowrap; transition:color var(--t-season);
 }
+.map-link {
+  display:flex; align-items:center; justify-content:center; gap:.5rem;
+  padding:.95rem; font-size:.9rem; font-weight:600; color:var(--color-primary);
+  border-top:1.5px solid var(--color-border);
+  transition:background var(--t-fast), color var(--t-season), border-color var(--t-season);
+}
+.map-link:hover { background:var(--color-primary); color:white; }
 
-.map-cta {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .5rem;
-  padding: 1rem;
-  font-size: .92rem;
-  font-weight: 600;
-  color: var(--color-primary);
-  background: var(--color-surface);
-  border-top: 1px solid var(--color-border);
-  transition: background var(--t-fast), color var(--t-season), border-color var(--t-season);
-}
-.map-cta:hover {
-  background: var(--color-primary);
-  color: white;
-}
-
-/* ==============================================
+/* ================================================
    CONTACT
-   ============================================== */
-.contact-section {
-  background: var(--color-primary);
-  transition: background var(--t-season);
-}
-.contact-inner {
-  display: flex;
-  align-items: center;
-  gap: 4rem;
-  padding: 1rem 0;
-}
-.contact-frog-svg { animation: frog-float 4s ease-in-out infinite; }
-
+   ================================================ */
+.contact-sec { background: var(--contact-bg); transition: background var(--t-season); }
+.contact-inner { display:flex; align-items:center; gap:4rem; padding:1rem 0; }
+.contact-frog-svg { animation:frog-float 4.5s ease-in-out infinite; flex-shrink:0; }
 .contact-text h2 {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 2.8rem);
-  font-weight: 900;
-  color: white;
-  line-height: 1.2;
-  margin-bottom: 1rem;
+  font-family:var(--font-display); font-size:clamp(2rem,4vw,2.8rem);
+  font-weight:900; color:white; line-height:1.2; margin-bottom:1rem;
 }
-.contact-text h2 .accent { color: var(--color-accent-solid); transition: color var(--t-season); }
-.contact-text p {
-  font-size: 1.05rem;
-  color: rgba(255,255,255,.85);
-  line-height: 1.7;
-  max-width: 480px;
-  margin-bottom: 2rem;
-}
-.contact-section .btn-primary {
-  background: white;
-  color: var(--color-primary);
-  transition: background var(--t-fast), color var(--t-season);
-}
-.contact-section .btn-primary:hover {
-  background: var(--color-accent);
-  color: var(--color-primary-dark);
-}
+.accent-white { color:var(--color-accent-solid); transition:color var(--t-season); }
+.contact-text p { font-size:1rem; color:rgba(255,255,255,.82); line-height:1.7; max-width:460px; margin-bottom:1.8rem; }
+.contact-btns { display:flex; gap:1rem; flex-wrap:wrap; }
 
-/* ==============================================
+/* ================================================
    FOOTER
-   ============================================== */
-.footer {
-  background: var(--color-text);
-  color: rgba(255,255,255,.8);
-  transition: background var(--t-season);
+   ================================================ */
+.footer { background:var(--footer-bg); color:rgba(255,255,255,.75); position:relative; transition:background var(--t-season); }
+.footer-main {
+  display:grid; grid-template-columns:2fr 1fr 1fr; gap:3rem;
+  max-width:var(--container); margin-inline:auto; padding:4rem 1.5rem 3rem;
 }
-.footer-top {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 3rem;
-  max-width: var(--container);
-  margin-inline: auto;
-  padding: 4rem 1.5rem 3rem;
-}
-.footer-logo {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  margin-bottom: .75rem;
-  color: white;
-}
-.footer-logo-name {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  font-weight: 900;
-}
-.footer-logo-name span { color: var(--color-primary-light); transition: color var(--t-season); }
-.footer-slogan {
-  font-style: italic;
-  font-size: .95rem;
-  margin-bottom: .5rem;
-  opacity: .8;
-}
-.footer-city { font-size: .9rem; opacity: .6; }
-
-.footer-nav h4,
-.footer-social h4 {
-  font-size: .78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  color: rgba(255,255,255,.5);
-  margin-bottom: 1rem;
-}
-.footer-nav ul { display: flex; flex-direction: column; gap: .5rem; }
-.footer-nav a {
-  font-size: .9rem;
-  opacity: .7;
-  transition: opacity var(--t-fast), color var(--t-fast);
-}
-.footer-nav a:hover { opacity: 1; color: var(--color-primary-light); }
-
-.social-icons { display: flex; gap: .6rem; margin-bottom: .75rem; }
+.footer-logo { display:flex; align-items:center; gap:.6rem; margin-bottom:.7rem; color:white; }
+.footer-logo-name { font-family:var(--font-display); font-size:1.7rem; font-weight:900; }
+.footer-logo-name span { color:var(--color-primary-light); transition:color var(--t-season); }
+.footer-slogan { font-style:italic; font-size:.92rem; opacity:.75; margin-bottom:.4rem; }
+.footer-addr { font-size:.88rem; opacity:.6; line-height:1.5; margin-bottom:.4rem; }
+.footer-tel a { font-size:.88rem; font-weight:600; color:var(--color-primary-light); transition:color var(--t-season); }
+.footer-tel a:hover { text-decoration:underline; }
+.footer-nav h4,.footer-social h4 { font-size:.75rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:.9rem; }
+.footer-nav ul { display:flex; flex-direction:column; gap:.45rem; }
+.footer-nav a { font-size:.88rem; opacity:.65; transition:opacity var(--t-fast), color var(--t-fast); }
+.footer-nav a:hover { opacity:1; color:var(--color-primary-light); }
+.social-row { display:flex; gap:.55rem; margin-bottom:.7rem; }
 .social-btn {
-  width: 40px; height: 40px;
-  border-radius: var(--radius-sm);
-  background: rgba(255,255,255,.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255,255,255,.7);
-  transition: background var(--t-fast), color var(--t-fast), transform var(--t-fast);
+  width:38px; height:38px; border-radius:var(--radius-sm);
+  background:rgba(255,255,255,.1); display:flex; align-items:center; justify-content:center;
+  color:rgba(255,255,255,.65);
+  transition:background var(--t-fast), color var(--t-fast), transform var(--t-fast);
 }
-.social-btn:hover {
-  background: var(--color-primary);
-  color: white;
-  transform: translateY(-2px);
-}
-.footer-social-text { font-size: .85rem; opacity: .5; }
-
+.social-btn:hover { background:var(--color-primary); color:white; transform:translateY(-3px); }
+.social-hint { font-size:.82rem; opacity:.45; }
 .footer-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: var(--container);
-  margin-inline: auto;
-  padding: 1.5rem 1.5rem;
-  border-top: 1px solid rgba(255,255,255,.08);
-  font-size: .82rem;
-  opacity: .5;
+  display:flex; justify-content:space-between; align-items:center;
+  max-width:var(--container); margin-inline:auto; padding:1.4rem 1.5rem;
+  border-top:1px solid rgba(255,255,255,.07);
+  font-size:.8rem; opacity:.45;
 }
 
-/* ==============================================
-   SWITCHER SAISONNIER (bouton flottant)
-   ============================================== */
+/* ================================================
+   SWITCHER SAISON (flottant)
+   ================================================ */
 .season-switcher {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 300;
-  display: flex;
-  flex-direction: column;
-  gap: .5rem;
-  align-items: center;
-  background: var(--color-surface);
-  border-radius: var(--radius-pill);
-  padding: .6rem .5rem;
-  box-shadow: var(--shadow-lg);
-  border: 1px solid var(--color-border);
-  transition: background var(--t-season), border-color var(--t-season);
+  position:fixed; bottom:1.8rem; right:1.8rem; z-index:300;
+  display:flex; flex-direction:column; gap:.45rem; align-items:center;
+  background:var(--color-surface); border-radius:var(--radius-pill);
+  padding:.55rem .45rem; box-shadow:var(--shadow-lg);
+  border:1.5px solid var(--color-border);
+  transition:background var(--t-season), border-color var(--t-season);
 }
 .ss-btn {
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  border: 2px solid transparent;
-  background: none;
-  font-size: 1.2rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform var(--t-fast), border-color var(--t-fast), background var(--t-fast);
+  width:36px; height:36px; border-radius:50%;
+  border:2px solid transparent; background:none;
+  font-size:1.15rem; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:transform var(--t-fast), border-color var(--t-fast), background var(--t-fast);
 }
-.ss-btn:hover { transform: scale(1.15); background: var(--color-bg2); }
-.ss-btn.active { border-color: var(--color-primary); background: var(--color-bg2); }
+.ss-btn:hover { transform:scale(1.2); background:var(--color-bg2); }
+.ss-btn.active { border-color:var(--color-primary); background:var(--color-bg2); }
 
-/* ==============================================
+/* ================================================
    RESPONSIVE
-   ============================================== */
-
-@media (max-width: 1024px) {
-  .concept-grid { grid-template-columns: 1fr 1fr; }
-  .boutique-grid { grid-template-columns: 1fr; }
+   ================================================ */
+@media (max-width:1024px) {
+  .concept-grid { grid-template-columns:1fr 1fr; }
+  .boutique-grid { grid-template-columns:1fr; }
+  .photos-grid { grid-template-columns:1fr 1fr; }
+  .photos-grid .photo-main { grid-column:1/-1; }
 }
-
-@media (max-width: 768px) {
-  /* Nav mobile */
+@media (max-width:768px) {
   .nav-links {
-    position: fixed;
-    top: 0; right: 0;
-    width: min(280px, 80vw);
-    height: 100vh;
-    background: var(--color-surface);
-    flex-direction: column;
-    padding: 5rem 2rem 2rem;
-    gap: .5rem;
-    box-shadow: var(--shadow-lg);
-    transform: translateX(100%);
-    transition: transform .35s cubic-bezier(.4,0,.2,1), background var(--t-season);
-    z-index: 190;
+    position:fixed; top:0; right:0; width:min(280px,80vw); height:100vh;
+    background:var(--color-surface); flex-direction:column;
+    padding:5rem 2rem 2rem; gap:.4rem; box-shadow:var(--shadow-lg);
+    transform:translateX(100%);
+    transition:transform .35s cubic-bezier(.4,0,.2,1), background var(--t-season);
+    z-index:190;
   }
-  .nav-links.open { transform: translateX(0); }
-  .nav-link { padding: .75rem 1rem; font-size: 1rem; }
-  .nav-burger { display: flex; }
-
-  /* Hero mobile */
-  .hero-content {
-    flex-direction: column-reverse;
-    padding-top: 6rem;
-    text-align: center;
-  }
-  .hero-frog-wrap { width: min(260px, 70vw); }
-  .hero-text { max-width: 100%; }
-  .hero-actions { justify-content: center; }
-  .hero-desc { max-width: 100%; }
-
-  /* Sections */
-  .section { padding: 4rem 0; }
-  .concept-grid { grid-template-columns: 1fr; }
-  .stats-row { gap: 2rem; flex-wrap: wrap; }
-  .promo-banner { flex-direction: column; text-align: center; padding: 2rem; }
-  .contact-inner { flex-direction: column; gap: 2rem; text-align: center; }
-  .contact-text p { margin-inline: auto; }
-  .footer-top { grid-template-columns: 1fr; gap: 2rem; padding-bottom: 2rem; }
-  .footer-bottom { flex-direction: column; gap: .5rem; text-align: center; }
-  .season-switcher { bottom: 1rem; right: 1rem; }
+  .nav-links.open { transform:translateX(0); }
+  .nav-link { padding:.7rem 1rem; font-size:1rem; }
+  .nav-burger { display:flex; }
+  .hero-content { flex-direction:column-reverse; padding-top:6.5rem; text-align:center; }
+  .hero-frog-zone { width:min(270px,75vw); }
+  .hero-text { max-width:100%; }
+  .hero-btns { justify-content:center; }
+  .hero-sub { max-width:100%; }
+  .section { padding:4rem 0; }
+  .concept-grid { grid-template-columns:1fr; }
+  .stats-bar { gap:1.8rem; flex-wrap:wrap; padding:2rem; }
+  .promo-card { flex-direction:column; text-align:center; padding:2rem; }
+  .photos-grid { grid-template-columns:1fr; }
+  .photos-grid .photo-main { grid-column:auto; }
+  .contact-inner { flex-direction:column; gap:2rem; text-align:center; }
+  .contact-text p { margin-inline:auto; }
+  .contact-btns { justify-content:center; }
+  .footer-main { grid-template-columns:1fr; gap:2rem; padding-bottom:2rem; }
+  .footer-bottom { flex-direction:column; gap:.4rem; text-align:center; }
+  .season-switcher { bottom:1rem; right:1rem; }
+  .frog-counter { top:70px; }
+}
+@media (max-width:480px) {
+  .hero-h1 { font-size:4rem; }
+  .section-title { font-size:1.75rem; }
+  .t-item { font-size:1.1rem; }
+  .promo-n1,.promo-n2 { font-size:2.5rem; }
 }
 
-@media (max-width: 480px) {
-  .hero-title { font-size: 4rem; }
-  .section-title { font-size: 1.8rem; }
-  .ticker-brand { font-size: 1.2rem; }
-  .promo-big { font-size: 2.2rem; }
-}
-
-/* ==============================================
+/* ================================================
    ACCESSIBILITÉ
-   ============================================== */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
+   ================================================ */
+@media (prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
   }
 }
-
-:focus-visible {
-  outline: 3px solid var(--color-primary);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
+:focus-visible { outline:3px solid var(--color-primary); outline-offset:3px; border-radius:4px; }
