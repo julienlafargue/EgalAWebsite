@@ -425,6 +425,29 @@ ul { list-style: none; }
   transition: background var(--t-season), transform var(--t-fast);
 }
 
+/* ── Navbar transparente sur le hero : toujours lisible en blanc ── */
+.navbar:not(.scrolled) .nav-logo-name {
+  color: white;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.25);
+}
+.navbar:not(.scrolled) .nav-logo-accent { color: white; }
+.navbar:not(.scrolled) .nav-link {
+  color: rgba(255,255,255,.9);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.navbar:not(.scrolled) .nav-link:hover {
+  background: rgba(255,255,255,.18);
+  color: white;
+  text-shadow: none;
+}
+.navbar:not(.scrolled) .season-badge {
+  background: rgba(255,255,255,.18);
+  color: white;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.navbar:not(.scrolled) .nav-burger span { background: white; }
+
 /* ================================================
    HERO
    ================================================ */
@@ -735,27 +758,68 @@ ul { list-style: none; }
    PHOTOS
    ================================================ */
 .photos-sec { background: var(--color-bg); }
-.photos-grid {
-  display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem; margin-bottom: 2.5rem;
+
+/* Mosaïque photos */
+.photos-mosaic {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 240px 240px 220px;
+  gap: .75rem;
+  margin-bottom: 2.5rem;
 }
-.photo-card { border-radius: var(--radius); overflow: hidden; min-height: 220px; }
-.photo-main { min-height: 280px; }
-.photo-inner {
-  height: 100%; min-height: inherit;
-  background: var(--color-bg2);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: .75rem;
-  border: 1.5px dashed var(--color-border);
-  border-radius: var(--radius);
-  transition: background var(--t-season), border-color var(--t-season);
-  cursor: default;
+.photo-tile {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
 }
-.photo-frog-bg { font-size: 4rem; opacity: .4; }
-.photo-inner p { font-size: .85rem; color: var(--color-text-muted); font-weight: 500; transition: color var(--t-season); }
-.photos-cta { text-align: center; }
-.photos-cta-text { font-size: 1.05rem; color: var(--color-text-muted); margin-bottom: 1rem; transition: color var(--t-season); }
+.photo-tile img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .5s ease, filter .3s ease;
+}
+.photo-tile:hover img { transform: scale(1.06); }
+
+/* Overlay au survol */
+.photo-tile::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.45) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.photo-tile:hover::after { opacity: 1; }
+
+/* Grande photo : 2 colonnes, 2 rangées */
+.photo-tile--hero {
+  grid-column: 1;
+  grid-row: 1 / 3;
+}
+/* Photo large bas gauche */
+.photo-tile--wide {
+  grid-column: 1;
+  grid-row: 3;
+}
+/* Étiquette saisonnière sur la grande photo */
+.photo-tile--hero .photo-label {
+  position: absolute; bottom: 1rem; left: 1rem;
+  background: var(--color-primary); color: white;
+  padding: .35rem .85rem; border-radius: var(--radius-pill);
+  font-size: .8rem; font-weight: 700;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity .3s, transform .3s, background var(--t-season);
+  z-index: 2;
+}
+.photo-tile--hero:hover .photo-label {
+  opacity: 1; transform: translateY(0);
+}
+
+/* CTA album */
+.photos-cta { text-align: center; padding-top: .5rem; }
+.photos-cta-text { font-size: 1rem; color: var(--color-text-muted); margin-bottom: 1rem; transition: color var(--t-season); }
 .photos-btn { font-size: 1rem; padding: 1rem 2.2rem; }
-.photos-cta-hint { font-size: .8rem; color: var(--color-text-muted); margin-top: .75rem; opacity: .7; }
+.photos-cta-hint { font-size: .78rem; color: var(--color-text-muted); margin-top: .65rem; opacity: .6; }
 
 /* ================================================
    BOUTIQUE / INFOS
@@ -891,14 +955,23 @@ ul { list-style: none; }
 .ss-btn:hover { transform:scale(1.2); background:var(--color-bg2); }
 .ss-btn.active { border-color:var(--color-primary); background:var(--color-bg2); }
 
+/* ── Texte ribbon en blanc sur fonds sombres ── */
+[data-season="autumn"] .ribbon-track,
+[data-season="winter"] .ribbon-track { color: white; }
+[data-season="summer"] .ribbon-track { color: white; text-shadow: 0 1px 3px rgba(0,0,0,.3); }
+
 /* ================================================
    RESPONSIVE
    ================================================ */
 @media (max-width:1024px) {
   .concept-grid { grid-template-columns:1fr 1fr; }
   .boutique-grid { grid-template-columns:1fr; }
-  .photos-grid { grid-template-columns:1fr 1fr; }
-  .photos-grid .photo-main { grid-column:1/-1; }
+  .photos-mosaic {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 220px 220px 200px 200px;
+  }
+  .photo-tile--hero { grid-column:1; grid-row:1/3; }
+  .photo-tile--wide { grid-column:1; grid-row:3; }
 }
 @media (max-width:768px) {
   .nav-links {
@@ -912,6 +985,8 @@ ul { list-style: none; }
   .nav-links.open { transform:translateX(0); }
   .nav-link { padding:.7rem 1rem; font-size:1rem; }
   .nav-burger { display:flex; }
+  /* Sur mobile la navbar est toujours scrolled-style pour lisibilité */
+  .navbar:not(.scrolled) { background: rgba(0,0,0,.35); backdrop-filter:blur(8px); }
   .hero-content { flex-direction:column-reverse; padding-top:6.5rem; text-align:center; }
   .hero-frog-zone { width:min(270px,75vw); }
   .hero-text { max-width:100%; }
@@ -921,8 +996,12 @@ ul { list-style: none; }
   .concept-grid { grid-template-columns:1fr; }
   .stats-bar { gap:1.8rem; flex-wrap:wrap; padding:2rem; }
   .promo-card { flex-direction:column; text-align:center; padding:2rem; }
-  .photos-grid { grid-template-columns:1fr; }
-  .photos-grid .photo-main { grid-column:auto; }
+  .photos-mosaic {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 180px 180px 160px;
+  }
+  .photo-tile--hero { grid-column:1/-1; grid-row:1; }
+  .photo-tile--wide { grid-column:1/-1; grid-row:auto; }
   .contact-inner { flex-direction:column; gap:2rem; text-align:center; }
   .contact-text p { margin-inline:auto; }
   .contact-btns { justify-content:center; }
@@ -936,6 +1015,12 @@ ul { list-style: none; }
   .section-title { font-size:1.75rem; }
   .t-item { font-size:1.1rem; }
   .promo-n1,.promo-n2 { font-size:2.5rem; }
+  .photos-mosaic {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .photo-tile { aspect-ratio: 4/3; }
+  .photo-tile--hero { grid-column:1; grid-row:auto; }
 }
 
 /* ================================================
